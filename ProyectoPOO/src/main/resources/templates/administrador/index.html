@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
-                            <img class="img-responsive" th:src="@{${'/images/cupon'}}" alt="">
+                            <img th:src="@{/images/cupon.png}" alt="">
                             <div class="caption">
                                 <h3><a  href="${pageContext.request.contextPath}/empresas.do?operacion=listarOferta" style="text-decoration: none; color:#3EC1D5;">Gestion de ofertas</a></h3>
                             <p>Gestiona las ofertas de tu empresa.</p>
@@ -35,16 +35,25 @@
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
-                            <img class="img-responsive" src="#" alt="">
+                            <img class="img-responsive" th:src="@{/images/enterprise.png}" alt="">
                             <div class="caption">
-                                <h3><a href="${pageContext.request.contextPath}/empresas.do?operacion=listarEmpleado" style="text-decoration: none; color:#3EC1D5;"> Gestion de empleados</a></h3>
-                                <p>Ten un control de los empleados de tu empresa.</p>
+                                <h3><a th:href="@{/administrador/lista}" style="text-decoration: none; color:#3EC1D5;"> Gestion de empresas</a></h3>
+                                <p>Ten un control de las empresas registradas.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-4">
+                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
-                            <img class="img-responsive" src="#" alt="">
+                            <img class="img-responsive" th:src="@{/images/customer.png}"  alt="">
+                            <div class="caption">
+                                <h3><a href="#" style="color:#3EC1D5;">Gestion de clientes</a></h3>
+                                <p>Visualiza la información de los clientes registrados.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-12">
+                        <div class="thumbnail">
+                            <img class="img-responsive" th:src="@{/images/padlock.png}"  alt="">
                             <div class="caption">
                                 <h3><a href="#" style="color:#3EC1D5;">Cambio de contraseña</a></h3>
                                 <p>Cambia tu contraseña cuando quieras.</p>
