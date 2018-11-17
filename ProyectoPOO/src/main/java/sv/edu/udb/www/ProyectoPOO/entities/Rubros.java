@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,13 +14,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 @Entity
 @Table(name="rubros"
     ,catalog="bddpoo"
 )
-public class Rubro implements java.io.Serializable {
+public class Rubros implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -28,9 +28,9 @@ public class Rubro implements java.io.Serializable {
 	private int idRubro;
     private String rubro;
     
-    private Set<Empresa> empresas= new HashSet<Empresa>(0);
+    private Set<Empresas> empresas= new HashSet<Empresas>(0);
     
-    public Rubro(){
+    public Rubros(){
         this.idRubro=0;
         this.rubro="";
     }
@@ -58,11 +58,11 @@ public class Rubro implements java.io.Serializable {
     }
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="rubros")
-    public Set<Empresa> getEmpresas() {
+    public Set<Empresas> getEmpresas() {
         return this.empresas;
     }
     
-    public void setEmpresas(Set<Empresa> empresas) {
+    public void setEmpresas(Set<Empresas> empresas) {
         this.empresas= empresas;
     }
 }

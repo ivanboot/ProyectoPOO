@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 @Entity
 @Table(name="empleado"
@@ -24,15 +24,15 @@ public class Empleado implements java.io.Serializable {
 	private int idEmpleado;
 	private String nombreEmpleado;
 	private String apellidoEmpleado;
-	private Usuario usuario;
-	private Empresa empresa;
+	private Usuarios usuarios;
+	private Empresas empresas;
 
 	public Empleado() {
 		this.idEmpleado = 0;
 		this.nombreEmpleado = "";
 		this.apellidoEmpleado = "";
-		this.usuario = null;
-		this.empresa = null;
+		this.usuarios = null;
+		this.empresas = null;
 	}
 	
 	@Id
@@ -71,21 +71,21 @@ public class Empleado implements java.io.Serializable {
 	
 	@JoinColumn(name = "IdUsuario", nullable=false)
     @ManyToOne(fetch = FetchType.LAZY)
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuarios getUsuarios() {
+		return usuarios;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarios(Usuarios usuarios) {
+		this.usuarios = usuarios;
 	}
 	
-	@JoinColumn(name = "CodigoEmpresa", nullable=false)
-    @ManyToOne(fetch=FetchType.LAZY)
-	public Empresa getEmpresa() {
-		return empresa;
+    @ManyToOne(fetch=FetchType.LAZY)	
+	@JoinColumn(name = "codigoEmpresa", nullable=false)
+	public Empresas getEmpresas() {
+		return empresas;
 	}
 
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
+	public void setEmpresas(Empresas empresas) {
+		this.empresas = empresas;
 	}
 }

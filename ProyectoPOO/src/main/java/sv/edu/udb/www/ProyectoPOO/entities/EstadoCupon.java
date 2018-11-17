@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 @Entity
 @Table(name="estadocupon"
@@ -29,7 +29,7 @@ public class EstadoCupon implements java.io.Serializable {
 	private int idEstadoCupon;
     private String estado;
     
-    private Set<Cupon> cupones= new HashSet<Cupon>(0);
+    private Set<Cupones> cupones= new HashSet<Cupones>(0);
     
     public EstadoCupon(){
         this.idEstadoCupon=0;
@@ -42,10 +42,7 @@ public class EstadoCupon implements java.io.Serializable {
     public int getIdEstadoCupon() {
         return idEstadoCupon;
     }
-    
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
+        
     public void setIdEstadoCupon(int idEstadoCupon) {
         this.idEstadoCupon = idEstadoCupon;
     }
@@ -62,11 +59,11 @@ public class EstadoCupon implements java.io.Serializable {
     }
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="estadocupon")
-    public Set<Cupon> getCupones() {
-        return this.cupones;
+    public Set<Cupones> getCupones() {
+        return cupones;
     }
     
-    public void setCupones(Set<Cupon> cupones) {
+    public void setCupones(Set<Cupones> cupones) {
         this.cupones = cupones;
     }
 }

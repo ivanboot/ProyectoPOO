@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -18,14 +18,14 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 
 @Entity
 @Table(name="ofertas"
     ,catalog="bddpoo"
 )
-public class Oferta implements java.io.Serializable {
+public class Ofertas implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -42,12 +42,12 @@ public class Oferta implements java.io.Serializable {
     private String otrosDetalles;
     private EstadoOferta estadoOferta;
     private String justificacion;
-    private Empresa empresa;
+    private Empresas empresas;
     private String url_foto;
     
-    private Set<Cupon> cupones = new HashSet<Cupon>(0);
+    private Set<Cupones> cupones = new HashSet<Cupones>(0);
     
-    public Oferta(){
+    public Ofertas(){
         this.idOferta=0;
         this.tituloOferta="";
         this.precioOferta=0;
@@ -60,7 +60,7 @@ public class Oferta implements java.io.Serializable {
         this.otrosDetalles="";
         this.estadoOferta=null;
         this.justificacion="";
-        this.empresa=null;
+        this.empresas=null;
     }
 
     @Id
@@ -191,12 +191,12 @@ public class Oferta implements java.io.Serializable {
     
     @JoinColumn(name = "CodigoEmpresa", nullable=false)
     @ManyToOne(fetch=FetchType.LAZY)
-    public Empresa getEmpresa() {
-        return empresa;
+    public Empresas getEmpresas() {
+        return empresas;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setEmpresas(Empresas empresas) {
+        this.empresas = empresas;
     }
 
     @Size(max = 100)    
@@ -209,11 +209,11 @@ public class Oferta implements java.io.Serializable {
     }
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="ofertas")
-    public Set<Cupon> getCupones() {
+    public Set<Cupones> getCupones() {
         return this.cupones;
     }
     
-    public void setCupones(Set<Cupon> cupones) {
+    public void setCupones(Set<Cupones> cupones) {
         this.cupones = cupones;
     }
     

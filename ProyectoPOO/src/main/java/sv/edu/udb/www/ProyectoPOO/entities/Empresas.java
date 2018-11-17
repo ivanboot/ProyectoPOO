@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,12 +15,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 
 @Entity
 @Table(name = "empresas", catalog = "bddpoo")
-public class Empresa implements java.io.Serializable {
+public class Empresas implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -30,22 +30,24 @@ public class Empresa implements java.io.Serializable {
 	private String nombreContacto;
 	private String direccion;
 	private String telefono;
-	private Rubro rubro;
+	private Rubros rubros;
 	private double comision;
-	private Usuario usuario;
+	private Usuarios usuarios;
 	
-	private Set<Oferta> ofertas = new HashSet<Oferta>(0);
-	private Set<Empleado> empleados = new HashSet<Empleado>(0);
+	private Set<Ofertas> oferta = new HashSet<Ofertas>(0);
+	private Set<Empleado> empleado = new HashSet<Empleado>(0);
 	
-	public Empresa() {
+	public Empresas() {
 		this.codigoEmpresa = "";
 		this.nombreEmpresa = "";
 		this.nombreContacto = "";
 		this.direccion = "";
 		this.telefono = "";
-		this.rubro = null;
+		this.rubros = null;
 		this.comision = 0;
-		this.usuario = null;
+		this.usuarios = null;
+		this.oferta=null;
+		this.empleado=null;
 	}
 
 	@Id
@@ -106,12 +108,12 @@ public class Empresa implements java.io.Serializable {
 
 	@JoinColumn(name = "IdRubro", nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Rubro getRubro() {
-		return rubro;
+	public Rubros getRubros() {
+		return rubros;
 	}
 
-	public void setRubro(Rubro rubro) {
-		this.rubro = rubro;
+	public void setRubros(Rubros rubros) {
+		this.rubros = rubros;
 	}
 
 	@Basic(optional = false)
@@ -126,29 +128,29 @@ public class Empresa implements java.io.Serializable {
 	
 	@JoinColumn(name = "IdUsuario", nullable=false)
     @ManyToOne(fetch=FetchType.LAZY)
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuarios getUsuarios() {
+		return usuarios;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarios(Usuarios usuarios) {
+		this.usuarios = usuarios;
 	}
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="empresas")
-    public Set<Oferta> getOfertas() {
-        return this.ofertas;
+    public Set<Ofertas> getOferta() {
+        return this.oferta;
     }
     
-    public void setOfertas(Set<Oferta> ofertas) {
-        this.ofertas = ofertas;
+    public void setOferta(Set<Ofertas> oferta) {
+        this.oferta = oferta;
     }
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="empresas")
-    public Set<Empleado> getEmpleados() {
-        return this.empleados;
+    public Set<Empleado> getEmpleado() {
+        return this.empleado;
     }
     
-    public void setEmpleados(Set<Empleado> empleados) {
-        this.empleados= empleados;
+    public void setEmpleado(Set<Empleado> empleado) {
+        this.empleado= empleado;
     }
 }

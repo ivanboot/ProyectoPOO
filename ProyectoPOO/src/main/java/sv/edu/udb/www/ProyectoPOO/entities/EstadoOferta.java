@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 @Entity
 @Table(name="estadooferta"
@@ -28,7 +28,7 @@ public class EstadoOferta implements java.io.Serializable {
 	private int idEstadoOferta;
     private String estado;
     
-    private Set<Oferta> ofertas= new HashSet<Oferta>(0);
+    private Set<Ofertas> ofertas= new HashSet<Ofertas>(0);
     
     public EstadoOferta(){
         this.idEstadoOferta=0;
@@ -58,11 +58,11 @@ public class EstadoOferta implements java.io.Serializable {
     }       
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="estadooferta")
-    public Set<Oferta> getOfertas() {
+    public Set<Ofertas> getOfertas() {
         return this.ofertas;
     }
     
-    public void setOfertas(Set<Oferta> ofertas) {
+    public void setOfertas(Set<Ofertas> ofertas) {
         this.ofertas = ofertas;
     }
 }

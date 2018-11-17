@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 
 import java.util.Date;
 import javax.persistence.Basic;
@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,12 +16,10 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
-
 @Entity
 @Table(name = "cupones", catalog = "bddpoo")
 
-public class Cupon implements java.io.Serializable {
+public class Cupones implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -28,16 +27,16 @@ public class Cupon implements java.io.Serializable {
 	private String codigoCupo;
 	private Date fechaCompra;
 	private Date fechaCanje;
-	private Cliente cliente;
-	private Oferta oferta;
+	private Clientes clientes;
+	private Ofertas ofertas;
 	private EstadoCupon estadoCupon;
 
-	public Cupon() {
+	public Cupones() {
 		this.codigoCupo = "";
 		this.fechaCompra = new Date();
 		this.fechaCanje = new Date();
-		this.cliente = null;
-		this.oferta = null;
+		this.clientes = null;
+		this.ofertas = null;
 		this.estadoCupon = null;
 	}
 
@@ -77,28 +76,28 @@ public class Cupon implements java.io.Serializable {
 
 	@JoinColumn(name = "IdCliente",nullable=false)
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Cliente getCliente() {
-		return cliente;
+	public Clientes getClientes() {
+		return clientes;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setClientes(Clientes clientes) {
+		this.clientes = clientes;
 	}
 
 	@JoinColumn(name = "IdOferta", nullable=false)
     @ManyToOne(fetch= FetchType.LAZY)
-	public Oferta getOferta() {
-		return oferta;
+	public Ofertas getOfertas() {
+		return ofertas;
 	}
 
-	public void setOferta(Oferta oferta) {
-		this.oferta = oferta;
+	public void setOfertas(Ofertas ofertas) {
+		this.ofertas = ofertas;
 	}
 	
-	@JoinColumn(name = "IdEstadoCupon", nullable=false)
-    @ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name = "IdEstadoCupon", nullable=false)    
 	public EstadoCupon getEstadoCupon() {
-		return estadoCupon;
+		return this.estadoCupon;
 	}
 
 	public void setEstadoCupon(EstadoCupon estadoCupon) {

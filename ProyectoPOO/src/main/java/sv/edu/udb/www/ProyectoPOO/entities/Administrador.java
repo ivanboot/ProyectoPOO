@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 @Entity
 @Table(name="administrador"
@@ -21,13 +21,13 @@ public class Administrador {
 	 private int idAdministrador;
 	    private String nombreAdministrador;
 	    private String apellidoAdministrador;
-	    private Usuario usuario;
+	    private Usuarios usuarios;
 	    
 	    public Administrador(){
 	        this.idAdministrador=0;
 	        this.nombreAdministrador="";
 	        this.apellidoAdministrador="";
-	        this.usuario=null;
+	        this.usuarios=null;
 	    }
 	    
 	    @Id
@@ -66,11 +66,11 @@ public class Administrador {
 	    
 	    @ManyToOne(fetch=FetchType.LAZY)
 	    @JoinColumn(name = "IdUsuario", nullable=false)
-	    public Usuario getUsuario() {
-	        return usuario;
+	    public Usuarios getUsuarios() {
+	        return usuarios;
 	    }
 
-	    public void setUsuario(Usuario usuario) {
-	        this.usuario = usuario;
+	    public void setUsuario(Usuarios usuarios) {
+	        this.usuarios = usuarios;
 	    }
 }

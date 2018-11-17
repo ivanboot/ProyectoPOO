@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,14 +15,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 
 @Entity
 @Table(name="clientes"
     ,catalog="bddpoo"
 )
-public class Cliente implements java.io.Serializable {
+public class Clientes implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -32,17 +32,17 @@ public class Cliente implements java.io.Serializable {
     private String apellidosClientes;
     private String direccion;
     private String dui;
-    private Usuario usuario;
+    private Usuarios usuarios;
     
-    private Set<Cupon> cupones = new HashSet<Cupon>(0);
+    private Set<Cupones> cupones = new HashSet<Cupones>(0);
     
-    public Cliente(){
+    public Clientes(){
         this.idCliente=0;
         this.nombreClientes="";
         this.apellidosClientes="";
         this.direccion="";
         this.dui="";
-        this.usuario=null;
+        this.usuarios=null;
     }
     
     @Id
@@ -103,20 +103,20 @@ public class Cliente implements java.io.Serializable {
     
     @JoinColumn(name = "IdUsuario", nullable=false)
     @ManyToOne(fetch=FetchType.LAZY)
-    public Usuario getUsuario() {
-        return usuario;
+    public Usuarios getUsuarios() {
+        return usuarios;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Usuarios usuarios) {
+        this.usuarios = usuarios;
     }
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="clientes")
-    public Set<Cupon> getCupones() {
+    public Set<Cupones> getCupones() {
         return this.cupones;
     }
     
-    public void setCupones(Set<Cupon> cupones) {
+    public void setCupones(Set<Cupones> cupones) {
         this.cupones = cupones;
     }
     

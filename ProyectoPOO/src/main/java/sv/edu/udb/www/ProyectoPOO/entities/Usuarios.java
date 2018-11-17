@@ -1,4 +1,4 @@
-package sv.edu.udb.www.ProyectPOO.entities;
+package sv.edu.udb.www.ProyectoPOO.entities;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,13 +14,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 @Entity
 @Table(name="usuarios"
     ,catalog="bddpoo"
 )
-public class Usuario implements java.io.Serializable {
+public class Usuarios implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -32,12 +32,12 @@ public class Usuario implements java.io.Serializable {
     private int confirmado;
     private String id_confirmacion;
     
-    private Set<Administrador> administradores = new HashSet<Administrador>(0);
-    private Set<Empleado> empleados = new HashSet<Empleado>(0);
-    private Set<Empresa> empresas = new HashSet<Empresa>(0);
-    private Set<Cliente> clientes = new HashSet<Cliente>(0);
+    private Set<Administrador> administrador = new HashSet<Administrador>(0);
+    private Set<Empleado> empleado = new HashSet<Empleado>(0);
+    private Set<Empresas> empresas = new HashSet<Empresas>(0);
+    private Set<Clientes> clientes = new HashSet<Clientes>(0);
     
-    public Usuario(){
+    public Usuarios(){
         this.idUsuario=0;
         this.correo="";
         this.contrasenia="";
@@ -112,38 +112,38 @@ public class Usuario implements java.io.Serializable {
     }
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="usuarios")
-    public Set<Administrador> getAdministradores() {
-        return this.administradores;
+    public Set<Administrador> getAdministrador() {
+        return this.administrador;
     }
     
-    public void setAdministradores(Set<Administrador> administradores) {
-        this.administradores= administradores;
-    }
-    
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="usuarios")
-    public Set<Empleado> getEmpleados() {
-        return this.empleados;
-    }
-    
-    public void setEmpleados(Set<Empleado> empleados) {
-        this.empleados= empleados;
+    public void setAdministrador(Set<Administrador> administrador) {
+        this.administrador= administrador;
     }
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="usuarios")
-    public Set<Empresa> getEmpresas() {
+    public Set<Empleado> getEmpleado() {
+        return this.empleado;
+    }
+    
+    public void setEmpleado(Set<Empleado> empleado) {
+        this.empleado= empleado;
+    }
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="usuarios")
+    public Set<Empresas> getEmpresas() {
         return this.empresas;
     }
     
-    public void setEmpresas(Set<Empresa> empresas) {
+    public void setEmpresas(Set<Empresas> empresas) {
         this.empresas= empresas;
     }
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="usuarios")
-    public Set<Cliente> getClientes() {
+    public Set<Clientes> getClientes() {
         return this.clientes;
     }
     
-    public void setClientes(Set<Cliente> clientes) {
+    public void setClientes(Set<Clientes> clientes) {
         this.clientes= clientes;
     }
 }
