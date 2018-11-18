@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -30,7 +31,9 @@ public class Usuarios  implements java.io.Serializable {
 
      private Integer idUsuario;
      private Tipousuario tipousuario;
+          
      private String correo;
+     
      private String contrasena;
      private boolean confirmado;
      private String idConfirmacion;
@@ -88,7 +91,7 @@ public class Usuarios  implements java.io.Serializable {
     }
 
     
-    @Column(name="Correo", nullable=false, length=100)
+    @Column(name="Correo", nullable=false, length=100)    
     public String getCorreo() {
         return this.correo;
     }

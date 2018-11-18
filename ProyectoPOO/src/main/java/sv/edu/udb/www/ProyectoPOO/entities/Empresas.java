@@ -13,6 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -30,11 +35,24 @@ public class Empresas  implements java.io.Serializable {
      private String codigoEmpresa;
      private Rubros rubros;
      private Usuarios usuarios;
+     
+     @NotBlank(message="Nombre de la empresa requerido.")
      private String nombreEmpresa;
+     
+     @NotBlank(message="Nombre del contacto requerido.")
      private String nombreContacto;
+     
+     @NotBlank(message="Direccion requerida.")
      private String direccion;
+     
+     @Pattern(regexp = "[7,2][0-9]{3}-[0-9]{4}" ,message="El formato del telefono deber ser 0000-0000 iniciando con 7 o 2.")
+     @NotBlank(message="telefono requerido")
      private String telefono;
+     
+     @Range(min=0,max=60,message="La comision no puede mayor de 60")
+     @NotNull(message="Comision requerida")
      private BigDecimal comision;
+     
      private Set<Empleado> empleados = new HashSet<Empleado>(0);
      private Set<Ofertas> ofertases = new HashSet<Ofertas>(0);
 

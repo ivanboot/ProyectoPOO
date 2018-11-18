@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -83,8 +85,12 @@ public class AdministradorController {
 			return "/administrador/nuevaEmpresa";
 		} else {
 			
+			empresas.setCodigoEmpresa("OMG"+(empresasRepository.generarCodigoEmpresa()+1));
+			System.out.println(empresas.getCodigoEmpresa());
+			
 			String cadenaAleatoria = UUID.randomUUID().toString();
             //Creacion password
+			
             char[] caracteres;
             caracteres = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
             String pass = "";
@@ -97,6 +103,9 @@ public class AdministradorController {
             usuarios.setIdConfirmacion(cadenaAleatoria);
             usuarios.setTipousuario(new Tipousuario(2));
             
+            if(usuariosRepository.findByCorreo(usuarios.getCorreo()) != null) {
+            	return "redirect:/administrador/nuevo";
+            }
             usuariosRepository.save(usuarios); //Ingreso el usuario a la BDD (funciona xd)
             
             usuarios = usuariosRepository.findByCorreo(usuarios.getCorreo());
@@ -114,20 +123,58 @@ public class AdministradorController {
             correo.setDestinatario(usuarios.getCorreo());
             correo.enviarCorreo();
             
-            empresas.setUsuarios(new Usuarios(usuarios.getIdUsuario()));
+            empresas.setUsuarios(new Usuarios(usuarios.getIdUsuario()));                                                           
             
-            empresasRepository.save(empresas);
-            
-            
-            
-			/*if (empresasRepository.existsById(empresas.getCodigoEmpresa())) {
+			if (empresasRepository.existsById(empresas.getCodigoEmpresa())) {
 				return null;
-			} else {*/
+			} else {
 								
-				//empresasRepository.save(empresas);
+				empresasRepository.save(empresas);
 				atributos.addFlashAttribute("exito", "Editorial guardada exitosamente");
 				return "redirect:/administrador/lista";
-			//}
+			}
+		}
+	}
+	
+	@GetMapping("/modificar/{codigo}")
+	public String verEmpresa(@PathVariable("codigo") String codigo, Model model) {
+		
+		model.addAttribute("empresas", empresasRepository.findByCodigoEmpresa(codigo));
+		model.addAttribute("usuarios", usuariosRepository.usuarioPorCodigoEmpresa(codigo));
+		model.addAttribute("listarubros", rubrosRepository.findAllByOrderByRubro());
+		return "/administrador/modificarEmpresa";
+
+	}
+	
+	@PutMapping("/modificar")
+	public String modificarEmpresa(@Valid @ModelAttribute("empresas") Empresas empresas, BindingResult result,
+			Model model, RedirectAttributes atributos, @Valid @ModelAttribute("usuarios") Usuarios usuarios) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("empresas", empresas);
+			model.addAttribute("usuarios", usuarios);
+			model.addAttribute("listarubros", rubrosRepository.findAllByOrderByRubro());
+			return "/administrador/modificarEmpresa";
+		} else {
+															
+            
+            /*if(usuariosRepository.findByCorreo(usuarios.getCorreo()) != null) {
+            	return "redirect:/administrador/nuevo";
+            }*/
+            //usuariosRepository.save(usuarios); 
+            
+            usuarios = usuariosRepository.findByCorreo(usuarios.getCorreo());                                                                                        
+            
+            empresas.setUsuarios(new Usuarios(usuarios.getIdUsuario()));
+            
+			if (empresasRepository.existsById(empresas.getCodigoEmpresa())) {
+				return null;
+			} else {
+								
+				empresasRepository.save(empresas);
+				atributos.addFlashAttribute("exito", "Editorial guardada exitosamente");
+				return "redirect:/administrador/lista";
+			}
 		}
 	}
 
