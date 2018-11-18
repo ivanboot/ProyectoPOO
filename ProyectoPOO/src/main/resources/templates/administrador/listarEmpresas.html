@@ -52,7 +52,7 @@
 						<td th:text="${empresas.comision}"></td>
 						<td th:text="${empresas.usuarios.correo}"></td>
 						<td><a class="btn btn-info"
-							th:href="'/administrador/modificar/'+${empresas.codigoEmpresa}"><span
+							th:href="@{'/administrador/modificar/'+${empresas.codigoEmpresa}}"><span
 								class="glyphicon glyphicon-edit"></span> Modificar</a></td>
 						<td><a class="btn btn-danger"
 							href="javascript:eliminar('${empresas.codigoEmpresa}', '${empresas.idUsuario}')"><span
@@ -80,6 +80,14 @@
 		$(document).ready(function() {
 			$('#tabla').DataTable();
 		});
+		
+		function eliminar(id,iduser){
+	           alertify.confirm("¿Realmente decea eliminar esta empresa?", function(e){
+	              if(e){
+	                  location.href="/administrador/borrar/"+id;
+	              } 
+	           });
+	  }
 	</script>
 </body>
 </html>

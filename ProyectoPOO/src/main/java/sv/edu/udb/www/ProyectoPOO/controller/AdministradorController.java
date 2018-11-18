@@ -36,8 +36,7 @@ import sv.edu.udb.www.ProyectoPOO.utils.Correo;
 @Controller
 @RequestMapping("/administrador")
 public class AdministradorController {
-	
-	
+
 	@Autowired
 	@Qualifier("EmpresasRepository")
 	EmpresasRepository empresasRepository;
@@ -84,69 +83,71 @@ public class AdministradorController {
 			model.addAttribute("listarubros", rubrosRepository.findAllByOrderByRubro());
 			return "/administrador/nuevaEmpresa";
 		} else {
-			
-			empresas.setCodigoEmpresa("OMG"+(empresasRepository.generarCodigoEmpresa()+1));
+
+			empresas.setCodigoEmpresa("OMG" + (empresasRepository.generarCodigoEmpresa() + 1));
 			System.out.println(empresas.getCodigoEmpresa());
-			
+
 			String cadenaAleatoria = UUID.randomUUID().toString();
-            //Creacion password
-			
-            char[] caracteres;
-            caracteres = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-            String pass = "";
-            for (int i = 0; i < 8; i++) {
-                pass += caracteres[new Random().nextInt(62)];
-            }
-			
-            usuarios.setContrasena(pass);
-            usuarios.setConfirmado(false);
-            usuarios.setIdConfirmacion(cadenaAleatoria);
-            usuarios.setTipousuario(new Tipousuario(2));
-            
-            if(usuariosRepository.findByCorreo(usuarios.getCorreo()) != null) {
-            	return "redirect:/administrador/nuevo";
-            }
-            usuariosRepository.save(usuarios); //Ingreso el usuario a la BDD (funciona xd)
-            
-            usuarios = usuariosRepository.findByCorreo(usuarios.getCorreo());
-            
-            String texto="";
-            String enlace = "Hola soy un enlace perron"
-                    + "?operacion=verificar&id=" + cadenaAleatoria;
-            texto += "Su cuenta ha sido creada, para ingresar al sistema como Empresa debe utilizar\n"
-            		+"Correo: " + usuarios.getCorreo()+"\n"
-            	    +"Contra: "+usuarios.getContrasena();
-            		
-            Correo correo = new Correo();
-            correo.setAsunto("Confirmacion de registro");
-            correo.setMensaje(texto);
-            correo.setDestinatario(usuarios.getCorreo());
-            correo.enviarCorreo();
-            
-            empresas.setUsuarios(new Usuarios(usuarios.getIdUsuario()));                                                           
-            
+			// Creacion password
+
+			char[] caracteres;
+			caracteres = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+					'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+					'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+					'u', 'v', 'w', 'x', 'y', 'z' };
+			String pass = "";
+			for (int i = 0; i < 8; i++) {
+				pass += caracteres[new Random().nextInt(62)];
+			}
+
+			usuarios.setContrasena(pass);
+			usuarios.setConfirmado(true);
+			usuarios.setIdConfirmacion(cadenaAleatoria);
+			usuarios.setTipousuario(new Tipousuario(2));
+
+			if (usuariosRepository.findByCorreo(usuarios.getCorreo()) != null) {
+				return "redirect:/administrador/nuevo";
+			}
+			usuariosRepository.save(usuarios); // Ingreso el usuario a la BDD (funciona xd)
+
+			usuarios = usuariosRepository.findByCorreo(usuarios.getCorreo());
+
+			String texto = "";
+			String enlace = "Hola soy un enlace perron" + "?operacion=verificar&id=" + cadenaAleatoria;
+			texto += "Su cuenta ha sido creada, para ingresar al sistema como Empresa debe utilizar\n" + "Correo: "
+					+ usuarios.getCorreo() + "\n" + "Contra: " + usuarios.getContrasena();
+
+			Correo correo = new Correo();
+			correo.setAsunto("Confirmacion de registro");
+			correo.setMensaje(texto);
+			correo.setDestinatario(usuarios.getCorreo());
+			correo.enviarCorreo();
+
+			empresas.setUsuarios(new Usuarios(usuarios.getIdUsuario()));
+
 			if (empresasRepository.existsById(empresas.getCodigoEmpresa())) {
 				return null;
 			} else {
-								
+
 				empresasRepository.save(empresas);
 				atributos.addFlashAttribute("exito", "Editorial guardada exitosamente");
 				return "redirect:/administrador/lista";
 			}
 		}
 	}
-	
+
 	@GetMapping("/modificar/{codigo}")
 	public String verEmpresa(@PathVariable("codigo") String codigo, Model model) {
-		
+
 		model.addAttribute("empresas", empresasRepository.findByCodigoEmpresa(codigo));
-		model.addAttribute("usuarios", usuariosRepository.usuarioPorCodigoEmpresa(codigo));
+		model.addAttribute("usuarios",
+				usuariosRepository.findByCorreo(usuariosRepository.usuarioPorCodigoEmpresa(codigo).getCorreo()));
 		model.addAttribute("listarubros", rubrosRepository.findAllByOrderByRubro());
 		return "/administrador/modificarEmpresa";
 
 	}
-	
-	@PutMapping("/modificar")
+
+	@PostMapping("/modificar")
 	public String modificarEmpresa(@Valid @ModelAttribute("empresas") Empresas empresas, BindingResult result,
 			Model model, RedirectAttributes atributos, @Valid @ModelAttribute("usuarios") Usuarios usuarios) {
 
@@ -156,26 +157,47 @@ public class AdministradorController {
 			model.addAttribute("listarubros", rubrosRepository.findAllByOrderByRubro());
 			return "/administrador/modificarEmpresa";
 		} else {
-															
-            
-            /*if(usuariosRepository.findByCorreo(usuarios.getCorreo()) != null) {
-            	return "redirect:/administrador/nuevo";
-            }*/
-            //usuariosRepository.save(usuarios); 
-            
-            usuarios = usuariosRepository.findByCorreo(usuarios.getCorreo());                                                                                        
-            
-            empresas.setUsuarios(new Usuarios(usuarios.getIdUsuario()));
-            
-			if (empresasRepository.existsById(empresas.getCodigoEmpresa())) {
-				return null;
-			} else {
-								
-				empresasRepository.save(empresas);
-				atributos.addFlashAttribute("exito", "Editorial guardada exitosamente");
-				return "redirect:/administrador/lista";
+
+			System.out.println(usuarios.getContrasena());
+			System.out.println(usuarios.getIdConfirmacion());
+			System.out.println(usuarios.getCorreo());
+			System.out.println(usuarios.getIdUsuario());
+
+			if (usuariosRepository.findByCorreo(usuarios.getCorreo()) != null) {
+				if (usuariosRepository.findByCorreo(usuarios.getCorreo()).getCorreo() != usuarios.getCorreo()) {
+					return "redirect:/administrador/modificar/" + empresas.getCodigoEmpresa();
+				}
 			}
+			usuariosRepository.save(usuarios);
+
+			usuarios = usuariosRepository.findByCorreo(usuarios.getCorreo());
+
+			empresas.setUsuarios(new Usuarios(usuarios.getIdUsuario()));
+
+			empresasRepository.save(empresas);
+			atributos.addFlashAttribute("exito", "Editorial guardada exitosamente");
+			return "redirect:/administrador/lista";
+
 		}
+	}
+
+	@GetMapping("/borrar/{codigo}")
+	public String eliminarEmpresa(@PathVariable("codigo") String codigo, Model model) {
+		Usuarios usuarios = new Usuarios();
+		Empresas empresas = new Empresas();
+		try {
+
+			usuarios = usuariosRepository.usuarioPorCodigoEmpresa(codigo);
+			empresas = empresasRepository.findByCodigoEmpresa(codigo);
+
+			empresasRepository.delete(empresas);
+			usuariosRepository.delete(usuarios);
+		} catch (Exception ex) {
+			
+		}
+
+		return "/administrador/modificarEmpresa";
+
 	}
 
 }

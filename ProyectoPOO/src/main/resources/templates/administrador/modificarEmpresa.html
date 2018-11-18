@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Nueva empresa</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.core.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.default.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<script th:src="@{/js/jquery-1.12.0.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/alertify.js}" type="text/javascript"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"
+	type="text/javascript"></script>
+</head>
+<body>
+	<div th:include="/template/AdminTemplate"></div>
+	<div class="container">
+		<div
+			style="background-color: whitesmoke; padding: 2%; color: black; margin-top: 2%; margin-bottom: 2%;">
+
+			<form class="contenform" action="#"
+				th:action="@{/administrador/modificar}" method="POST"
+				th:object="${empresas}">
+				<h1>Modificar empresas</h1>
+
+				<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+					<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+				</ul>
+
+				<input type="hidden" value="modificar" name="operacion">
+				<input type="hidden" name="codigoEmpresa" id="codigoEmpresa" th:field="*{codigoEmpresa}" />
+				<input type="hidden" name="contra" id="contr" th:field="${usuarios.contrasena}" />
+				<input type="hidden" name="contra" id="contr" th:field="${usuarios.idUsuario}" />
+				<input type="hidden" name="contra" id="contr" th:field="${usuarios.confirmado}" />
+				<input type="hidden" name="contra" id="contr" th:field="${usuarios.idConfirmacion}" />
+				<input type="hidden" name="contra" id="contr" th:field="${usuarios.tipousuario.idTipoUsuario}" />
+				<div class="well well-sm" style="color: #C2185B;">
+					<strong><span class="glyphicon glyphicon-asterisk"></span>Campos
+						requeridos</strong>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="codigo">Nombre de la empresa:</label>
+							<div class="input-group">
+								<input type="text" class="form-control" name="nombreEmpresa"
+									id="nombreEmpresa" th:field="*{nombreEmpresa}"
+									placeholder="Ingresa el nombre de la empresa"> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-asterisk"></span></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="codigo">Nombre del contacto:</label>
+							<div class="input-group">
+								<input type="text" class="form-control" name="nombreContacto"
+									id="codigo" th:field="*{nombreContacto}"
+									placeholder="Ingresa el nombre del contacto"> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-asterisk"></span></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="codigo">Correo:</label>
+							<div class="input-group">
+								<input type="text" class="form-control" name="correo"
+									id="codigo" th:field="${usuarios.correo}"
+									placeholder="Ingresa el correo de la empresa"> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-asterisk"></span></span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="codigo">Dirección:</label>
+							<div class="input-group col-md-12">
+								<textarea class="form-control"
+									placeholder="Ingresa la dirección" th:field="*{direccion}"
+									name="direccion" style="text-align-last: start;"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="codigo">Teléfono:</label>
+							<div class="input-group">
+								<input type="tel" class="form-control" name="telefono"
+									id="codigo" th:field="*{telefono}"
+									placeholder="Ingresa el numero de telefono"> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-asterisk"></span></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="codigo">Rubro al que pertenece:</label>
+							<div class="input-group">
+								<select class="form-control" name="rubros" id="selrubros"
+									th:field="*{rubros.idRubro}">
+									<option th:each="rubros : ${listarubros}"
+										th:value="${rubros.idRubro}" th:utext="${rubros.rubro}" />
+								</select> <span class="input-group-addon"><span
+									class="glyphicon glyphicon-asterisk"></span></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="codigo">Comisión:</label>
+							<div class="input-group">
+								<input type="number" step="any" class="form-control"
+									name="comision" id="codigo" th:field="*{comision}"
+									placeholder="Ingresa la comisión"> <span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-asterisk"></span></span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<input type="submit" class="btn btn-info" value="Guardar"
+					name="Guardar">
+			</form>
+		</div>
+	</div>
+</body>
+</html>
