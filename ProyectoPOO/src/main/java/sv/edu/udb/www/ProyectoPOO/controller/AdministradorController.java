@@ -59,11 +59,10 @@ public class AdministradorController {
 	}
 
 	@PostMapping("/nuevo")
-	public String insertarEmpresa(@Valid @ModelAttribute("empresas") Empresas empresas,
-			@Valid @ModelAttribute("usuarios") Usuarios usuarios, BindingResult result, Model model,
+	public String insertarEmpresa(@Valid @ModelAttribute("empresas") Empresas empresas, BindingResult result, Model model,
 			RedirectAttributes atributos) {
 		
-		System.out.println(usuarios.getCorreo());
+		System.out.println(empresas.getNombreContacto());
 		/*
 		 * if(result.hasErrors()) { model.addAttribute("empresas", empresas);
 		 * model.addAttribute("usuarios",usuarios); model.addAttribute("listarubros",
@@ -74,7 +73,7 @@ public class AdministradorController {
 		 * usuariosRepository.save(usuarios); atributos.addFlashAttribute("exito",
 		 * "Editorial guardada exitosamente"); return "redirect:/editoriales/list"; }
 		 */
-		return "";
+		return "/administrador/listarEmpresas";
 	}
 
 }
