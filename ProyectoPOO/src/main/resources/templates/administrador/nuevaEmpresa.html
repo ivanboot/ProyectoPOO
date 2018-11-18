@@ -65,7 +65,7 @@
 							<label for="codigo">Correo:</label>
 							<div class="input-group">
 								<input type="text" class="form-control" name="correo"
-									id="codigo" th:field="*{usuarios.correo}"
+									id="codigo" th:field="${usuarios.correo}"
 									placeholder="Ingresa el correo de la empresa"> <span
 									class="input-group-addon"><span
 									class="glyphicon glyphicon-asterisk"></span></span>
@@ -95,9 +95,9 @@
 						<div class="form-group">
 							<label for="codigo">Rubro al que pertenece:</label>
 							<div class="input-group">
-								<select class="form-control" name="rubros" id="selrubros">
+								<select class="form-control" name="rubros" id="selrubros" th:field="*{rubros.idRubro}">
 									<option th:each="rubros : ${listarubros}" 
-										th:value="${rubros}"
+										th:value="${rubros.idRubro}"
 										th:utext="${rubros.rubro}" />
 								</select> <span class="input-group-addon"><span
 									class="glyphicon glyphicon-asterisk"></span></span>

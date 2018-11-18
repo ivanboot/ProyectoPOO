@@ -41,7 +41,10 @@ public class Usuarios  implements java.io.Serializable {
 
     public Usuarios() {
     }
-
+    
+    public Usuarios(Integer idUsuario) {
+    	this.idUsuario=idUsuario;
+    }
 	
     public Usuarios(Tipousuario tipousuario, String correo, String contrasena, boolean confirmado, String idConfirmacion) {
         this.tipousuario = tipousuario;

@@ -37,6 +37,11 @@ public class Tipousuario  implements java.io.Serializable {
     public Tipousuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+    
+    public Tipousuario(Integer idTipoUsuario) {
+    	this.idTipoUsuario=idTipoUsuario;
+    }
+    
     public Tipousuario(String tipoUsuario, Set<Usuarios> usuarioses) {
        this.tipoUsuario = tipoUsuario;
        this.usuarioses = usuarioses;

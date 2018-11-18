@@ -9,7 +9,7 @@ import sv.edu.udb.www.ProyectoPOO.entities.Usuarios;
 @Repository("UsuariosRepository")
 public interface UsuariosRepository extends JpaRepository<Usuarios, String> {
 	
-	public abstract List<Usuarios> findByCorreo(String correo);
+	public abstract Usuarios findByCorreo(String correo);
 	public abstract List<Usuarios> findAllByOrderByIdUsuario();
 	
 	public abstract Usuarios findByIdUsuario(Integer id);
