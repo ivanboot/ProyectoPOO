@@ -80,7 +80,7 @@ public class Usuarios  implements java.io.Serializable {
         this.idUsuario = idUsuario;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="IdTipoUsuario", nullable=false)
     public Tipousuario getTipousuario() {
         return this.tipousuario;

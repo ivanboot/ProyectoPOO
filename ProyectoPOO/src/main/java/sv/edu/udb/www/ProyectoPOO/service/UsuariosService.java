@@ -13,25 +13,25 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-//import sv.edu.udb.www.DemoSpring.entities.Usuario;
-//import sv.edu.udb.www.DemoSpring.repositories.UsuariosRepository;
+import sv.edu.udb.www.ProyectoPOO.entities.Usuarios;
+import sv.edu.udb.www.ProyectoPOO.repositories.UsuariosRepository;
 
 @Service("usuariosService")
-public class UsuariosService{
+public class UsuariosService implements UserDetailsService{
 
 	
-	/*@Autowired
-	@Qualifier("usuariosRepository")
+	@Autowired
+	@Qualifier("UsuariosRepository")
 	UsuariosRepository usuariosRepository;
 	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario= usuariosRepository.findByUsuario(username);
+		Usuarios usuario= usuariosRepository.findByCorreo(username);
 		List<GrantedAuthority> lista= new ArrayList<>();
-		lista.add(new SimpleGrantedAuthority(usuario.getTipoUsuario().getTipoUsuario()));
-	return new User(username, usuario.getPassword(), lista);
-	}*/
+		lista.add(new SimpleGrantedAuthority(usuario.getTipousuario().getTipoUsuario()));
+		return new User(username, usuario.getContrasena(), lista);
+	}
 			
 			
 

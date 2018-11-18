@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.MessageDigestPasswordEncoder
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	/*@Autowired
+	@Autowired
 	@Qualifier("usuariosService")
 	private UserDetailsService usuariosService;
 	
@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(usuariosService).passwordEncoder(new MessageDigestPasswordEncoder("SHA-256"));
 		
-	}*/
+	}
 	
 	
 	@Override
@@ -38,8 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/css/**", "/js/**","/administrador/**","/images/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
-			.formLogin().loginPage("/login").defaultSuccessUrl("/editoriales/list")
-			.usernameParameter("usuario").passwordParameter("password")
+			.formLogin().loginPage("/login").defaultSuccessUrl("/login")
+			.usernameParameter("correo").passwordParameter("password")
 			.permitAll();
 			
 	}

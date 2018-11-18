@@ -56,13 +56,13 @@ hr {
   margin-bottom: 50px;
 }
 .section-header .section-title {
-  font-size: 44px;
+  
   color: #ffffff;
   text-transform: uppercase;
   position: relative;
   padding-bottom: 20px;
   margin: 0 0 20px;
-  border-bottom: 2px solid #c2185b;
+  border-bottom: 2px solid #004080;
   display: inline-block;
 }
 .section-header .section-title:before {
@@ -224,12 +224,12 @@ color: #FFFFFF;
   #main-nav.navbar-default .navbar-nav > li.open > a,
   #main-nav.navbar-default .navbar-nav > li:hover > a {
 	color: #fff;
-	background: #7575a3;
+	background: rgba(0,0,0,.3);
 }
   #main-nav.navbar-default .dropdown-menu {
     padding: 0 20px;
     min-width: 220px;
-    background-color: rgba(117, 117, 163, 0.9);
+    background-color: rgba(0,0,0,.3);
     border: 0;
     border-radius: 0;
     box-shadow: none;
@@ -918,7 +918,7 @@ margin: 15px 0;
   color: #fff;
 }
 #contact-us {
-  padding: 100px 0 10px;
+  
 }
 #contact-us h1,
 #contact-us h2 {
