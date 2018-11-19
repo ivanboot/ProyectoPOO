@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -30,9 +32,15 @@ public class Clientes  implements java.io.Serializable {
 
      private Integer idCliente;
      private Usuarios usuarios;
+     @NotBlank(message="Debe ingresar el nombre")
      private String nombreClientes;
+     @NotBlank(message="Debe ingresar los apellidos")
      private String apellidosClientes;
+     @NotBlank(message="Debe ingresar una dirección")
      private String direccion;
+
+     @NotBlank(message="Debe ingresar el DUI")
+     @Pattern(regexp = "[0-9]{8}-[0-9]" ,message="DUI con formato incorrecto")
      private String dui;
      private Set<Cupones> cuponeses = new HashSet<Cupones>(0);
 
