@@ -12,7 +12,8 @@ public interface UsuariosRepository extends JpaRepository<Usuarios, String> {
 	
 	public abstract Usuarios findByCorreo(String correo);
 	
-	public abstract Usuarios findByCorreoAndConfirmado(String correo, int confirmado);
+	@Query("SELECT u FROM Usuarios u WHERE u.correo=?1 and u.confirmado=1")
+	public abstract Usuarios findByCorreoAndConfirmado(String correo);
 	
 	public abstract List<Usuarios> findAllByOrderByIdUsuario();
 	

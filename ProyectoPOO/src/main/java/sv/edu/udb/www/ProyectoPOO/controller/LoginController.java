@@ -41,7 +41,7 @@ public class LoginController {
 	ClientesRepository clientesRepository;
 
 	@GetMapping("/login")
-	public String showFormLogin() {
+	public String showFormLogin(Model model) {
 
 		String tipoUsuario = "";
 
@@ -61,6 +61,9 @@ public class LoginController {
 		} else if (tipoUsuario.equals("Empleado")) {
 			return "/empleado/index";
 		}
+		
+		model.addAttribute("clientes", new Clientes());
+		model.addAttribute("usuarios", new Usuarios());
 
 		return "/public/login";
 	}

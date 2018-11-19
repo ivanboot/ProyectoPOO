@@ -93,10 +93,6 @@
 
 				</section>
 
-				<div th:if="${param.error}" class="alert alert-danger">Usuario
-					y/o contraseña incorrecta</div>
-				<div th:if="${param.logout}" class="alert alert-info">Se ha
-					cerrado la sesión</div>
 				<form action="#" th:action="@{/nuevoCliente}" method="post" th:object="${clientes}">
 
 					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -111,7 +107,7 @@
 
 					<div class="form-group">
 						<label for="username">Apellidos:</label> <input
-							class="form-control" th:field="*{apellidoClientes}"
+							class="form-control" th:field="*{apellidosClientes}"
 							id="apellidos" type="text" name="apellidos" />
 					</div>
 
@@ -128,13 +124,13 @@
 
 					<div class="form-group">
 						<label for="username">Dirección:</label> <input
-							class="form-control" th:field="*{direccion}" id="apellidos"
-							type="text" name="apellidos" />
+							class="form-control" th:field="*{direccion}" id="direccion"
+							type="text" name="direccion" />
 					</div>
 
 					<div class="form-group">
 						<label for="username">DUI:</label> <input class="form-control"
-							th:field="*{dui}" id="apellidos" type="text" name="apellidos" />
+							th:field="*{dui}" id="dui" type="text" name="dui" />
 					</div>
 
 					<br />

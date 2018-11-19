@@ -27,7 +27,7 @@ public class UsuariosService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuarios usuario= usuariosRepository.findByCorreoAndConfirmado(username,1);
+		Usuarios usuario= usuariosRepository.findByCorreoAndConfirmado(username);
 		List<GrantedAuthority> lista= new ArrayList<>();
 		lista.add(new SimpleGrantedAuthority(usuario.getTipousuario().getTipoUsuario()));
 		return new User(username, usuario.getContrasena(), lista);
