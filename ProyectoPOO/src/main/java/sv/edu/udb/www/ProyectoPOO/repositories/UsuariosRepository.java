@@ -17,4 +17,7 @@ public interface UsuariosRepository extends JpaRepository<Usuarios, String> {
 	
 	@Query("SELECT u FROM Usuarios u INNER JOIN u.empresases e WHERE e.codigoEmpresa=?1")
 	public abstract Usuarios usuarioPorCodigoEmpresa(String codigo);
+	
+	@Query("DELETE FROM Usuarios u WHERE u.idUsuario=?1")
+	public abstract void borrarUsuarioPorId(Integer id);
 }

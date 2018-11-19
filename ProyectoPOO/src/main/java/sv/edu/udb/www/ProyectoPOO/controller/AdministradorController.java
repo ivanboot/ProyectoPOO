@@ -116,8 +116,8 @@ public class AdministradorController {
 
 			String texto = "";
 			String enlace = "Hola soy un enlace perron" + "?operacion=verificar&id=" + cadenaAleatoria;
-			texto += "Su cuenta ha sido creada, para ingresar al sistema como Empresa debe utilizar\n" + "Correo: "
-					+ usuarios.getCorreo() + "\n" + "Contra: " + usuarios.getContrasena();
+			texto += "Su cuenta ha sido creada, para ingresar al sistema como Empresa debe utilizar <br/>" + "Correo: "
+					+ usuarios.getCorreo() + "<br/>" + "Contra: " + usuarios.getContrasena();
 
 			Correo correo = new Correo();
 			correo.setAsunto("Confirmacion de registro");
@@ -191,14 +191,19 @@ public class AdministradorController {
 
 			usuarios = usuariosRepository.usuarioPorCodigoEmpresa(codigo);
 			empresas = empresasRepository.findByCodigoEmpresa(codigo);
-
-			empresasRepository.delete(empresas);
-			usuariosRepository.delete(usuarios);
+			System.out.println(empresas.getCodigoEmpresa());
+			
+			if(empresasRepository.existsById(empresas.getCodigoEmpresa())) {
+				empresasRepository.deleteById(empresas.getCodigoEmpresa());
+				usuariosRepository.borrarUsuarioPorId(usuarios.getIdUsuario());
+			}else {
+				
+			}			
 		} catch (Exception ex) {
 			
 		}
 
-		return "/administrador/modificarEmpresa";
+		return "redirect:/administrador/lista";
 
 	}
 
