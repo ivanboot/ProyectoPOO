@@ -11,12 +11,15 @@ import sv.edu.udb.www.ProyectoPOO.entities.Usuarios;
 public interface UsuariosRepository extends JpaRepository<Usuarios, String> {
 	
 	public abstract Usuarios findByCorreo(String correo);
+	
+	public abstract Usuarios findByCorreoAndConfirmado(String correo, int confirmado);
+	
 	public abstract List<Usuarios> findAllByOrderByIdUsuario();
 	
 	public abstract Usuarios findByIdUsuario(Integer id);
 	
 	@Query("SELECT u FROM Usuarios u INNER JOIN u.empresases e WHERE e.codigoEmpresa=?1")
-	public abstract Usuarios usuarioPorCodigoEmpresa(String codigo);
+	public abstract Usuarios usuarioPorCodigoEmpresa(String codigo);		
 	
 	@Query("DELETE FROM Usuarios u WHERE u.idUsuario=?1")
 	public abstract void borrarUsuarioPorId(Integer id);

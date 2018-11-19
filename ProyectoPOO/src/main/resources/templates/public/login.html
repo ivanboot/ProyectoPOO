@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Inicio de sesión</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
@@ -27,29 +27,32 @@
 		style="color: black; margin-top: 5%; margin-bottom: 2%; width: 600px;">
 
 		<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist"
-			style="border: 0;" >
-			<li class="nav-item active" style="width:49.8%;border-radius:0;"><a class="nav-link active"
-				id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" style="border-radius:0;"
+			style="border: 0;">
+			<li class="nav-item active" style="width: 49.8%; border-radius: 0;"><a
+				class="nav-link active" id="pills-home-tab" data-toggle="pill"
+				href="#pills-home" role="tab" style="border-radius: 0;"
 				aria-controls="pills-home" aria-selected="true">Inicia Sesión</a></li>
-			<li class="nav-item" style="width:49.8%;  border-radius:0;"><a class="nav-link" id="pills-profile-tab"
-				data-toggle="pill" href="#pills-profile" role="tab" style="border-radius:0;"
+			<li class="nav-item" style="width: 49.8%; border-radius: 0;"><a
+				class="nav-link" id="pills-profile-tab" data-toggle="pill"
+				href="#pills-profile" role="tab" style="border-radius: 0;"
 				aria-controls="pills-profile" aria-selected="false">Registrate</a></li>
 		</ul>
 
-		<div class="tab-content" id="pills-tabContent" style="border: 0;background-color: whitesmoke; padding: 5%;">
-			<div class="tab-pane fade show active in" id="pills-home"
-				role="tabpanel" aria-labelledby="pills-home-tab">
+		<div class="tab-content" id="pills-tabContent"
+			style="border: 0; background-color: whitesmoke; padding: 5%;">
+			<div class="tab-pane fade active in" id="pills-home" role="tabpanel"
+				aria-labelledby="pills-home-tab">
 
 				<section id="contact-us" class="form-group" style="width: 100%;">
-					
-						<div class="section-header" style="margin: 0;">
-							<h2 class="section-title wow fadeInDown" style="color: black;display:block;">Iniciar
-								Sesión</h2>
-							<p class="wow fadeInDown"></p>
-						</div>
-					
+
+					<div class="section-header" style="margin: 0;">
+						<h2 class="section-title wow fadeInDown"
+							style="color: black; display: block;">Iniciar Sesión</h2>
+						<p class="wow fadeInDown"></p>
+					</div>
+
 				</section>
-				<!--/#contact-us-->
+
 
 				<div th:if="${param.error}" class="alert alert-danger">Usuario
 					y/o contraseña incorrecta</div>
@@ -65,6 +68,9 @@
 							class="form-control" id="password" type="password"
 							name="password" />
 					</div>
+					<div style="text-align: right">
+						<a href="#">¿Olvido su contraseña?</a>
+					</div>
 					<div>
 						<input class="btn btn-primary" style="background: #004080;"
 							type="submit" value="Iniciar sesión" />
@@ -75,7 +81,74 @@
 
 			</div>
 			<div class="tab-pane fade" id="pills-profile" role="tabpanel"
-				aria-labelledby="pills-profile-tab">...</div>
+				aria-labelledby="pills-profile-tab">
+
+				<section id="contact-us" class="form-group" style="width: 100%;">
+
+					<div class="section-header" style="margin: 0;">
+						<h2 class="section-title wow fadeInDown"
+							style="color: black; display: block; text-align: right;">Registrate</h2>
+						<p class="wow fadeInDown"></p>
+					</div>
+
+				</section>
+
+				<div th:if="${param.error}" class="alert alert-danger">Usuario
+					y/o contraseña incorrecta</div>
+				<div th:if="${param.logout}" class="alert alert-info">Se ha
+					cerrado la sesión</div>
+				<form action="#" th:action="@{/nuevoCliente}" method="post" th:object="${clientes}">
+
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+
+					<div class="form-group">
+						<label for="username">Nombres:</label> <input class="form-control"
+							th:field="*{nombreClientes}" id="nombres" type="text"
+							name="nombres" />
+					</div>
+
+					<div class="form-group">
+						<label for="username">Apellidos:</label> <input
+							class="form-control" th:field="*{apellidoClientes}"
+							id="apellidos" type="text" name="apellidos" />
+					</div>
+
+					<div class="form-group">
+						<label for="username">Correo electrónico:</label> <input
+							class="form-control" th:field="${usuarios.correo}" id="correo"
+							type="text" name="correo" />
+					</div>
+					<div class="form-group">
+						<label class="password">Contraseña:</label> <input
+							class="form-control" id="password" type="password"
+							th:field="${usuarios.contrasena}" name="password" />
+					</div>
+
+					<div class="form-group">
+						<label for="username">Dirección:</label> <input
+							class="form-control" th:field="*{direccion}" id="apellidos"
+							type="text" name="apellidos" />
+					</div>
+
+					<div class="form-group">
+						<label for="username">DUI:</label> <input class="form-control"
+							th:field="*{dui}" id="apellidos" type="text" name="apellidos" />
+					</div>
+
+					<br />
+
+					<div>
+						<input class="btn btn-primary" style="background: #004080;"
+							type="submit" value="Registrarme" />
+
+
+					</div>
+				</form>
+
+
+			</div>
 
 		</div>
 
