@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<title>Empleado template</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.core.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.default.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<script th:src="@{/js/jquery-1.12.0.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/alertify.js}" type="text/javascript"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}" type="text/javascript"></script>
+</head>
+<body>
+<div th:include="/template/EmpleadoTemplate">
+</div>
+<section style="margin-top: 5%; margin-left: 11%;" >
+            <div class="container">
+                <div class="row" >
+                    <div class="col-sm-6 col-md-4" >
+                        <div class="thumbnail">
+                            <img th:src="@{/images/voucher.png}" alt="">
+                            <div class="caption">
+                                <h3><a  href="${pageContext.request.contextPath}/empresas.do?operacion=listarOferta" style="text-decoration: none; color:#3EC1D5;">Cupón</a></h3>
+                            <p>Canjea tus cupones.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                     
+                    <div class="col-sm-8 col-md-6">
+                        <div class="thumbnail">
+                            <img class="img-responsive" th:src="@{/images/padlock2.png}"  alt="">
+                            <div class="caption">
+                                <h3><a href="#" style="color:#3EC1D5;">Cambio de contraseña</a></h3>
+                                <p>Cambia tu contraseña cuando quieras.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</body>
+</html>
