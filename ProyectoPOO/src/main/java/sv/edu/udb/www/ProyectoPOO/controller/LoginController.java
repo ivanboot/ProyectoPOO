@@ -37,7 +37,7 @@ public class LoginController {
 	@Autowired
 	@Qualifier("UsuariosRepository")
 	UsuariosRepository usuariosRepository;
-	
+
 	@Autowired
 	@Qualifier("ClientesRepository")
 	ClientesRepository clientesRepository;
@@ -63,7 +63,7 @@ public class LoginController {
 		} else if (tipoUsuario.equals("Empleado")) {
 			return "/empleado/index";
 		}
-		
+
 		model.addAttribute("clientes", new Clientes());
 		model.addAttribute("usuarios", new Usuarios());
 
@@ -72,7 +72,8 @@ public class LoginController {
 
 	@PostMapping("/public/nuevoCliente")
 	public String insertarCliente(@Valid @ModelAttribute("clientes") Clientes clientes, BindingResult result,
-			Model model, RedirectAttributes atributos, @Valid @ModelAttribute("usuarios") Usuarios usuarios) throws Exception {
+			Model model, RedirectAttributes atributos, @Valid @ModelAttribute("usuarios") Usuarios usuarios)
+			throws Exception {
 
 		if (result.hasErrors()) {
 			model.addAttribute("clientes", clientes);
@@ -83,7 +84,7 @@ public class LoginController {
 			String cadenaAleatoria = UUID.randomUUID().toString();
 
 			usuarios.setContrasena(SecurityUtils.encriptarSHA(usuarios.getContrasena()));
-			usuarios.setConfirmado(true);
+			usuarios.setConfirmado(false);
 			usuarios.setIdConfirmacion(cadenaAleatoria);
 			usuarios.setTipousuario(new Tipousuario(4));
 
@@ -96,8 +97,10 @@ public class LoginController {
 			usuarios = usuariosRepository.findByCorreo(usuarios.getCorreo());
 
 			String texto = "";
-			String enlace = "http://localhost:8080/public/verificarCuenta/"+ usuarios.getIdUsuario() +"/"+ cadenaAleatoria;
-			texto += "Su cuenta ha sido creada, para ingresar al sitio debe verificar su cuenta <br/>Pulse <a href='"+enlace+"'>aqui</a> para verificar su cuenta";
+			String enlace = "http://localhost:8080/public/verificarCuenta/" + usuarios.getIdUsuario() + "/"
+					+ cadenaAleatoria;
+			texto += "Su cuenta ha sido creada, para ingresar al sitio debe verificar su cuenta <br/>Pulse <a href='"
+					+ enlace + "'>aqui</a> para verificar su cuenta";
 
 			Correo correo = new Correo();
 			correo.setAsunto("Confirmacion de registro");
@@ -107,36 +110,46 @@ public class LoginController {
 
 			clientes.setUsuarios(new Usuarios(usuarios.getIdUsuario()));
 			clientesRepository.save(clientes);
-			atributos.addFlashAttribute("exito", "Se ha registrado exitosamente, verifique su correo para validar la cuenta");
+			atributos.addFlashAttribute("exito",
+					"Se ha registrado exitosamente, verifique su correo para validar la cuenta");
 			System.out.println("Excelente");
 			return "redirect:/login";
 
 		}
 	}
-	
+
 	@GetMapping("/public/verificarCuenta/{idUsuario}/{cadenaAleatoria}")
-	public String verificarCuenta(@PathVariable("idUsuario") int idUsuario,@PathVariable("cadenaAleatoria") String cadenaAleatoria,Model model, RedirectAttributes atributos) {
-		
-		if(usuariosRepository.existsById(String.valueOf(idUsuario))) {
-			
-			Usuarios usuario = new Usuarios();
-			
-			usuario = usuariosRepository.findByIdUsuario(idUsuario);
-			
-			if(usuario.getIdConfirmacion().equals(cadenaAleatoria)) {
-				
-				usuario.setConfirmado(true);
-				
-				usuariosRepository.save(usuario);
-				
-				atributos.addFlashAttribute("exito", "Su cuenta ha sido verificada con exito");
-				
-				return "redirect:/login";
+	public String verificarCuenta(@PathVariable("idUsuario") String idUsuario,
+			@PathVariable("cadenaAleatoria") String cadenaAleatoria, Model model, RedirectAttributes atributos) {
+
+		try {
+
+			int id = Integer.parseInt(idUsuario);
+
+			if (usuariosRepository.findByIdUsuario(id) != null) {
+
+				Usuarios usuario = new Usuarios();
+
+				usuario = usuariosRepository.findByIdUsuario(id);
+
+				if (usuario.getIdConfirmacion().equals(cadenaAleatoria)) {
+
+					usuario.setConfirmado(true);
+
+					usuariosRepository.save(usuario);
+
+					atributos.addFlashAttribute("exito", "Su cuenta ha sido verificada con exito");
+
+					return "redirect:/login";
+				}
 			}
-			
+
+			return "redirect:/public/inicio";
+
+		} catch (Exception e) {
+			return "redirect:/public/inicio";
 		}
-		
-		return "/public/inicio";
+
 	}
 
 }
