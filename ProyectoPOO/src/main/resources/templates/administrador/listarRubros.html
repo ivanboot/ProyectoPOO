@@ -27,48 +27,32 @@ p {
 	<div th:include="/template/AdminTemplate"></div>
 	<h1 class="text-center" style="color: #004080;">Lista rubros</h1>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-5">
 			<a type="button" class="btn btn-primary btn-md"
-				th:href="@{/administrador/nuevo}"> Nueva Empresa</a>
+				th:href="@{/administrador/nuevoRubro}"> Nuevo Rubro</a>
 			<div style="background-color: whitesmoke; padding: 2%; color: black;">
 				<table class="table table-bordered" id="tabla">
 					<thead>
 						<tr>
-
-							<th>Nombre de la empresa</th>
-							<th>Nombre contacto</th>
-							<th>Dirección</th>
-							<th>Telefono</th>
-							<th>Rubro</th>
-							<th>Comision</th>
-							<th>Correo</th>
-							<th>Eliminar</th>
-							<th>Modificar</th>
-							<th>Ofertas</th>
+							<th>#</th>
+							<th>Rubro</th>							
+							<th>Operaciones</th>							
 						</tr>
 					</thead>
-					<tbody th:each="empresas : ${lista}">
+					<tbody th:each="rubros : ${lista}">
 						<tr>
-							<td th:text="${empresas.codigoEmpresa}"></td>
-							<td th:text="${empresas.nombreContacto}"></td>
-							<td th:text="${empresas.direccion}"></td>
-							<td th:text="${empresas.telefono}"></td>
-							<td th:text="${empresas.rubros.rubro}"></td>
-							<td th:text="${empresas.comision}"></td>
-							<td th:text="${empresas.usuarios.correo}"></td>
+							<td th:text="${rubros.idRubro}"></td>
+							<td th:text="${rubros.rubro}"></td>							
 							<td><a class="btn btn-info"
 								th:href="@{'/administrador/modificar/'+${empresas.codigoEmpresa}}"><span
-									class="glyphicon glyphicon-edit"></span> Modificar</a></td>
-							<td><a class="btn btn-danger"
-								th:href="'javascript:eliminar(\'' +${empresas.codigoEmpresa}+ '\')'"><span
-									class="glyphicon glyphicon-trash"></span> Eliminar</a></td>
-							<td><a class="btn btn-success"
-								href="${pageContext.request.contextPath}/administrador.do?operacion=ofertasEmpresa&codigo=${empresas.codigoEmpresa}"><span
-									class="glyphicon glyphicon-tags"></span> Ver ofertas</a></td>
+									class="glyphicon glyphicon-edit"></span> Modificar</a>
+							<a class="btn btn-danger" th:href="'javascript:eliminar(\'' +${empresas.codigoEmpresa}+ '\')'"><spanclass="glyphicon glyphicon-trash"></span> Eliminar</a></td>							
 						</tr>
 					</tbody>
 				</table>
 			</div>
+		</div>
+		<div class="col-md-6">
 		</div>
 	</div>
 

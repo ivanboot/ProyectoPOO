@@ -33,6 +33,7 @@ import sv.edu.udb.www.ProyectoPOO.repositories.EmpresasRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.RubrosRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.UsuariosRepository;
 import sv.edu.udb.www.ProyectoPOO.utils.Correo;
+import sv.edu.udb.www.ProyectoPOO.utils.SecurityUtils;
 
 @Controller
 @PreAuthorize("hasAuthority('Administrador')")
@@ -77,7 +78,7 @@ public class AdministradorController {
 
 	@PostMapping("/nuevo")
 	public String insertarEmpresa(@Valid @ModelAttribute("empresas") Empresas empresas, BindingResult result,
-			Model model, RedirectAttributes atributos, @Valid @ModelAttribute("usuarios") Usuarios usuarios) {
+			Model model, RedirectAttributes atributos, @Valid @ModelAttribute("usuarios") Usuarios usuarios) throws Exception {
 
 		if (result.hasErrors()) {
 			model.addAttribute("empresas", empresas);
@@ -102,7 +103,7 @@ public class AdministradorController {
 				pass += caracteres[new Random().nextInt(62)];
 			}
 
-			usuarios.setContrasena(pass);
+			usuarios.setContrasena(SecurityUtils.encriptarSHA(pass));			
 			usuarios.setConfirmado(true);
 			usuarios.setIdConfirmacion(cadenaAleatoria);
 			usuarios.setTipousuario(new Tipousuario(2));
@@ -114,8 +115,7 @@ public class AdministradorController {
 
 			usuarios = usuariosRepository.findByCorreo(usuarios.getCorreo());
 
-			String texto = "";
-			String enlace = "Hola soy un enlace perron" + "?operacion=verificar&id=" + cadenaAleatoria;
+			String texto = "";			
 			texto += "Su cuenta ha sido creada, para ingresar al sistema como Empresa debe utilizar <br/>" + "Correo: "
 					+ usuarios.getCorreo() + "<br/>" + "Contra: " + usuarios.getContrasena();
 
