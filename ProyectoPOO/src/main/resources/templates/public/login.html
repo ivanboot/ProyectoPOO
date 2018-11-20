@@ -97,7 +97,7 @@
 				<form action="#" th:action="@{/public/nuevoCliente}" method="post"
 					th:object="${clientes}">
 
-					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" style="padding-left: 30px;">
 						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
 					</ul>
 
@@ -206,11 +206,19 @@
 	<div th:if="${fracaso}">
 		<div style="display: none;" id="fracaso" th:text='${fracaso}'></div>
 		<script>
+
+		$('#pills-tab a[href="#pills-profile"]').tab('show')
+		
 		var fracaso = document.getElementById("fracaso").innerHTML;
 		swal("Ups!", fracaso,"error");
 		</script>
 
-
+	</div>
+	
+	<div th:if="${clientes.nombreClientes}">
+		<script>
+			$('#pills-tab a[href="#pills-profile"]').tab('show')
+		</script>
 	</div>
 
 
