@@ -14,7 +14,7 @@ public interface CuponesRepository extends JpaRepository<Cupones, String>{
 		
 	public abstract List<Cupones> findAllByOrderByCodigoCupo();
 	
-	@Transactional
+	@Transactional 
 	public abstract List<Cupones> findAllByClientesIdCliente(Integer id);
 	
 	public abstract Cupones findByCodigoCupo(String codigo);
