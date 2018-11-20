@@ -27,8 +27,11 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import sv.edu.udb.www.ProyectoPOO.entities.Empresas;
+import sv.edu.udb.www.ProyectoPOO.entities.Rubros;
 import sv.edu.udb.www.ProyectoPOO.entities.Tipousuario;
 import sv.edu.udb.www.ProyectoPOO.entities.Usuarios;
+import sv.edu.udb.www.ProyectoPOO.repositories.ClientesRepository;
+import sv.edu.udb.www.ProyectoPOO.repositories.CuponesRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.EmpresasRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.RubrosRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.UsuariosRepository;
@@ -51,6 +54,14 @@ public class AdministradorController {
 	@Autowired
 	@Qualifier("UsuariosRepository")
 	UsuariosRepository usuariosRepository;
+
+	@Autowired
+	@Qualifier("ClientesRepository")
+	ClientesRepository clientesRepository;
+	
+	@Autowired
+	@Qualifier("CuponesRepository")
+	CuponesRepository cuponesRepository;
 
 	@GetMapping("/inicio")
 	public String inicioAdmin() {
@@ -78,7 +89,8 @@ public class AdministradorController {
 
 	@PostMapping("/nuevo")
 	public String insertarEmpresa(@Valid @ModelAttribute("empresas") Empresas empresas, BindingResult result,
-			Model model, RedirectAttributes atributos, @Valid @ModelAttribute("usuarios") Usuarios usuarios) throws Exception {
+			Model model, RedirectAttributes atributos, @Valid @ModelAttribute("usuarios") Usuarios usuarios)
+			throws Exception {
 
 		if (result.hasErrors()) {
 			model.addAttribute("empresas", empresas);
@@ -103,19 +115,20 @@ public class AdministradorController {
 				pass += caracteres[new Random().nextInt(62)];
 			}
 
-			usuarios.setContrasena(SecurityUtils.encriptarSHA(pass));			
+			usuarios.setContrasena(SecurityUtils.encriptarSHA(pass));
 			usuarios.setConfirmado(true);
 			usuarios.setIdConfirmacion(cadenaAleatoria);
 			usuarios.setTipousuario(new Tipousuario(2));
 
 			if (usuariosRepository.findByCorreo(usuarios.getCorreo()) != null) {
+				atributos.addFlashAttribute("fracaso", "El correo asignado se encuentra en uso...");
 				return "redirect:/administrador/nuevo";
 			}
 			usuariosRepository.save(usuarios); // Ingreso el usuario a la BDD (funciona xd)
 
 			usuarios = usuariosRepository.findByCorreo(usuarios.getCorreo());
 
-			String texto = "";			
+			String texto = "";
 			texto += "Su cuenta ha sido creada, para ingresar al sistema como Empresa debe utilizar <br/>" + "Correo: "
 					+ usuarios.getCorreo() + "<br/>" + "Contra: " + usuarios.getContrasena();
 
@@ -132,7 +145,7 @@ public class AdministradorController {
 			} else {
 
 				empresasRepository.save(empresas);
-				atributos.addFlashAttribute("exito", "Editorial guardada exitosamente");
+				atributos.addFlashAttribute("exito", "Empresa ingresada exitosamente!");
 				return "redirect:/administrador/lista";
 			}
 		}
@@ -167,6 +180,7 @@ public class AdministradorController {
 
 			if (usuariosRepository.findByCorreo(usuarios.getCorreo()) != null) {
 				if (usuariosRepository.findByCorreo(usuarios.getCorreo()).getCorreo() != usuarios.getCorreo()) {
+					atributos.addFlashAttribute("fracaso", "El correo asignado se encuentra en uso...");
 					return "redirect:/administrador/modificar/" + empresas.getCodigoEmpresa();
 				}
 			}
@@ -177,14 +191,14 @@ public class AdministradorController {
 			empresas.setUsuarios(new Usuarios(usuarios.getIdUsuario()));
 
 			empresasRepository.save(empresas);
-			atributos.addFlashAttribute("exito", "Editorial guardada exitosamente");
+			atributos.addFlashAttribute("exito", "Empresa modificada exitosamente!");
 			return "redirect:/administrador/lista";
 
 		}
 	}
 
 	@GetMapping("/borrar/{codigo}")
-	public String eliminarEmpresa(@PathVariable("codigo") String codigo, Model model) {
+	public String eliminarEmpresa(@PathVariable("codigo") String codigo, Model model, RedirectAttributes atributos) {
 		Usuarios usuarios = new Usuarios();
 		Empresas empresas = new Empresas();
 		try {
@@ -192,19 +206,116 @@ public class AdministradorController {
 			usuarios = usuariosRepository.usuarioPorCodigoEmpresa(codigo);
 			empresas = empresasRepository.findByCodigoEmpresa(codigo);
 			System.out.println(empresas.getCodigoEmpresa());
-			
-			if(empresasRepository.existsById(empresas.getCodigoEmpresa())) {
+
+			if (empresasRepository.existsById(empresas.getCodigoEmpresa())) {
 				empresasRepository.deleteById(empresas.getCodigoEmpresa());
 				usuariosRepository.borrarUsuarioPorId(usuarios.getIdUsuario());
-			}else {
-				
-			}			
+				atributos.addFlashAttribute("exito", "Empresa eliminada exitosamente!");
+			} else {
+
+			}
 		} catch (Exception ex) {
-			
+			atributos.addFlashAttribute("fracaso", "No se pudo eliminar la empresa...");
 		}
 
 		return "redirect:/administrador/lista";
 
 	}
 
+	@GetMapping("/listarRubros")
+	public String listarRubros(Model model) {
+		model.addAttribute("lista", rubrosRepository.findAllByOrderByRubro());
+		return "/administrador/listarRubros";
+
+	}
+
+	@GetMapping("/nuevoRubro")
+	public String nuevoRubro(Model model) {
+		model.addAttribute("rubros", new Rubros());
+		return "/administrador/nuevoRubro";
+	}
+
+	@PostMapping("/nuevoRubro")
+	public String insertarRubro(@Valid @ModelAttribute("rubros") Rubros rubros, BindingResult result, Model model,
+			RedirectAttributes atributos) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("rubros", rubros);
+			atributos.addFlashAttribute("fracaso", "El rubro asignado ya existe en el sistema");
+			return "/administrador/nuevoRubro";
+		} else {
+			if (rubrosRepository.findByRubro(rubros.getRubro()) != null) {
+				atributos.addFlashAttribute("fracaso", "El rubro asignado ya existe en el sistema");
+				return "/administrador/nuevoRubro";
+			}
+			rubrosRepository.save(rubros);
+			atributos.addFlashAttribute("exito", "Rubro ingresado exitosamente!");
+			return "redirect:/administrador/listarRubros";
+		}
+	}
+
+	@GetMapping("/modificarRubro/{codigo}")
+	public String verRubro(@PathVariable("codigo") Integer codigo, Model model) {
+		model.addAttribute("rubros", rubrosRepository.findByIdRubro(codigo));
+		return "/administrador/modificarRubro";
+	}
+
+	@PostMapping("/modificarRubro")
+	public String modificarRubro(@Valid @ModelAttribute("rubros") Rubros rubros, BindingResult result, Model model,
+			RedirectAttributes atributos) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("rubros", rubros);
+			return "/administrador/modificarRubro";
+		} else {
+			if (rubrosRepository.findByRubro(rubros.getRubro()) != null) {
+				if (rubrosRepository.findByRubro(rubros.getRubro()).getRubro() != rubros.getRubro()) {
+					atributos.addFlashAttribute("fracaso", "El rubro asignado ya existe en el sistema");
+					return "redirect:/administrador/modificarRubro/" + rubros.getIdRubro();
+				}
+			}
+			rubrosRepository.save(rubros);
+			atributos.addFlashAttribute("exito", "Rubro modificado exitosamente!");
+			return "redirect:/administrador/listarRubros";
+		}
+	}
+
+	@GetMapping("/borrarRubro/{codigo}")
+	public String eliminarRubro(@PathVariable("codigo") Integer codigo, Model model, RedirectAttributes atributos) {
+		Rubros rubros = new Rubros();
+		try {
+
+			rubros = rubrosRepository.findByIdRubro(codigo);
+
+			if (rubrosRepository.findByRubro(rubros.getRubro()) != null) {
+				System.out.println(rubros.getRubro());
+				rubrosRepository.borrarRubrosPorId(rubros.getRubro());
+				atributos.addFlashAttribute("exito", "El rubro ha sido eliminado exitosamente!");
+			} else {
+				atributos.addFlashAttribute("fracaso", "El rubro no pudo ser eliminado...");
+			}
+		} catch (Exception ex) {
+			atributos.addFlashAttribute("fracaso", "El rubro no pudo ser eliminado...");
+		}
+
+		return "redirect:/administrador/listarRubros";
+
+	}
+
+	@GetMapping("/listarClientes")
+	public String listarClientes(Model model) {
+
+		model.addAttribute("lista", clientesRepository.findAllByOrderByNombreClientes());
+
+		return "/administrador/listarClientes";
+
+	}
+
+	@GetMapping("/listarClientes/{codigo}/listarCupones")
+	public String listarCuponesClientes(@PathVariable("codigo") Integer codigo,Model model) {
+		model.addAttribute("clientes", clientesRepository.findByIdCliente(codigo));
+		//model.addAttribute("lista", cuponesRepository.findAllByClientesIdCliente(codigo));
+		
+		return "/administrador/listarCuponesClientes";
+	}
 }

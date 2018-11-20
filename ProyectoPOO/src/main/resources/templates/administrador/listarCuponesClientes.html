@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Lista cupones del cliente</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.core.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.default.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<script th:src="@{/js/jquery-1.12.0.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/alertify.js}" type="text/javascript"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"
+	type="text/javascript"></script>
+	<script th:src="@{/js/sweetalert.min.js}" type="text/javascript"></script>
+	<style type="text/css">
+		p{
+			color: black;
+		}
+	</style>
+</head>
+<body>
+	<div th:include="/template/AdminTemplate"></div>
+	<h1 class="text-center" style="color: #004080;" th:text="'Lista de cupones de '+${clientes.nombreClientes}+' '+${clientes.apellidosClientes}" />
+	<div class="row">
+		<div class="col-md-12">
+			<a type="button" class="btn btn-primary btn-md" th:href="@{/administrador/nuevo}"> Cupones disponibles</a>
+			<a type="button" class="btn btn-primary btn-md" th:href="@{/administrador/nuevo}"> Cupones canjeados</a>
+			<a type="button" class="btn btn-primary btn-md" th:href="@{/administrador/nuevo}"> Cupones vencidos</a>		
+		<div style="background-color: whitesmoke; padding: 2%; color: black;">
+			<div >
+				
+				<div style="background-color: white; padding: 1%;" class="col-md-4">
+					<div class="img">
+					 <img alt="img" th:src="@{/images/padlock.png}" >
+					</div>
+				</div>
+				
+			</div>			
+		</div>
+	</div>
+	</div>
+
+	<footer id="footer" style="width: 100%; position: absolute; bottom: 0;">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12">&copy; 2018 Todo ofertas.
+					Derechos reservados.</div>
+			</div>
+		</div>
+	</footer>
+	<!--/#footer-->
+	<script>
+		$(document).ready(function() {
+			$('#tabla').DataTable();
+		});					  
+	</script>
+</body>
+</html>
