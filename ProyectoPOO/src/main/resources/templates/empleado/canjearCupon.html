@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<title>Canjear Cupón</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/alertify.core.css}" rel="stylesheet" />
+		<link th:href="@{/css/alertify.default.css}" rel="stylesheet" />
+		<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/styles.css}" rel="stylesheet" />
+		<script th:src="@{/js/jquery-1.12.0.min.js}" type="text/javascript"></script>
+		<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+		<script th:src="@{/js/alertify.js}" type="text/javascript"></script>
+		<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+		<script th:src="@{/js/dataTables.bootstrap.min.js}" type="text/javascript"></script>
+	</head>
+	<body>
+		<div th:include="/template/EmpleadoTemplate"></div>
+		<div class="container">
+			<div style="background-color: whitesmoke; padding: 2%; color: black; margin-top: 2%; margin-bottom: 2%;">
+				<form class="contenform" action="#" 
+				th:action="@{/empleado/canjear/obtenerCupon}" method="post" th:object="${cupones}">
+				
+					<h1>Canjear Cupón</h1>
+					
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+					
+					<input type="hidden" value="nuevo" name="operacion">
+					<div class="well well-sm" style="color: #C2185B;">
+						<strong><span class="glyphicon glyphicon-asterisk"></span>Campos requeridos</strong>
+					</div>
+					
+					<div class="col-md-12">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="codigo">Código del cupón:</label>
+								<div class="input-group">
+									<input type="text" class="form-control" name="codigoCupon"
+									id="codigo" th:field="*{codigoCupo}"
+									placeholder="Ingresa el código del cupón"><span
+									class="input-group-addon"><span
+									class="glyphicon glyphicon-asterisk"></span></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<input type="submit" class="btn btn-info" value="Mostrar cupón" name="Guardar">
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
