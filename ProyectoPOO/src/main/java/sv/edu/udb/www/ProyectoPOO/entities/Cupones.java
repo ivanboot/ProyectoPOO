@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -53,9 +54,7 @@ public class Cupones  implements java.io.Serializable {
        this.fechaCanje = fechaCanje;
     }
    
-     @Id 
-
-    
+    @Id 
     @Column(name="CodigoCupo", unique=true, nullable=false, length=13)
     public String getCodigoCupo() {
         return this.codigoCupo;
@@ -64,7 +63,7 @@ public class Cupones  implements java.io.Serializable {
     public void setCodigoCupo(String codigoCupo) {
         this.codigoCupo = codigoCupo;
     }
-
+//@JsonIgnore
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="IdCliente", nullable=false)
     public Clientes getClientes() {
@@ -74,7 +73,8 @@ public class Cupones  implements java.io.Serializable {
     public void setClientes(Clientes clientes) {
         this.clientes = clientes;
     }
-
+    
+//@JsonIgnore
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="IdEstadoCupon", nullable=false)
     public Estadocupon getEstadocupon() {
@@ -85,6 +85,7 @@ public class Cupones  implements java.io.Serializable {
         this.estadocupon = estadocupon;
     }
 
+    //@JsonIgnore
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="IdOferta", nullable=false)
     public Ofertas getOfertas() {

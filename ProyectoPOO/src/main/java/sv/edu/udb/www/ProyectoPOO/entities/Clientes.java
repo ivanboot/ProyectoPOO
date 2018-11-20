@@ -64,9 +64,10 @@ public class Clientes  implements java.io.Serializable {
        this.cuponeses = cuponeses;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
+     
 
-    
+    @Id 
+    @GeneratedValue(strategy=IDENTITY)
     @Column(name="IdCliente", unique=true, nullable=false)
     public Integer getIdCliente() {
         return this.idCliente;

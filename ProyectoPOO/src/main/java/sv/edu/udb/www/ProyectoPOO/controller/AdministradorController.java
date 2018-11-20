@@ -155,8 +155,7 @@ public class AdministradorController {
 	public String verEmpresa(@PathVariable("codigo") String codigo, Model model) {
 
 		model.addAttribute("empresas", empresasRepository.findByCodigoEmpresa(codigo));
-		model.addAttribute("usuarios",
-				usuariosRepository.findByCorreo(usuariosRepository.usuarioPorCodigoEmpresa(codigo).getCorreo()));
+		model.addAttribute("usuarios",usuariosRepository.findByCorreo(usuariosRepository.usuarioPorCodigoEmpresa(codigo).getCorreo()));
 		model.addAttribute("listarubros", rubrosRepository.findAllByOrderByRubro());
 		return "/administrador/modificarEmpresa";
 
@@ -311,11 +310,14 @@ public class AdministradorController {
 
 	}
 
-	@GetMapping("/listarClientes/{codigo}/listarCupones")
-	public String listarCuponesClientes(@PathVariable("codigo") Integer codigo,Model model) {
-		model.addAttribute("clientes", clientesRepository.findByIdCliente(codigo));
-		//model.addAttribute("lista", cuponesRepository.findAllByClientesIdCliente(codigo));
-		
+	@GetMapping("/listarClientes/listarCupones/{codigo}")
+	public String listarCuponesClientes(@PathVariable("codigo") String codigo,Model model) {
+		model.addAttribute("clientes", clientesRepository.findByIdCliente(Integer.parseInt(codigo)));
+		try {
+		model.addAttribute("lista", cuponesRepository.listarCuponesPorCliente(Integer.parseInt(codigo)));
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 		return "/administrador/listarCuponesClientes";
 	}
 }

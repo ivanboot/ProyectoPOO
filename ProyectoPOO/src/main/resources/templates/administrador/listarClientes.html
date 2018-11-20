@@ -50,7 +50,7 @@
 						<td th:text="${clientes.usuarios.correo}"></td>
 						<td th:text="${clientes.dui}"></td>
 						<td th:text="${clientes.direccion}"></td>
-						<td><a class="btn btn-success" th:href="@{'/administrador/listarClientes/'+${clientes.idCliente}+'/listarCupones'}">
+						<td><a class="btn btn-success" th:href="@{'/administrador/listarClientes/listarCupones/'+${clientes.idCliente}}">
 						<span class="glyphicon glyphicon-tags"></span> Ver cupones</a></td>
 					</tr>
 				</tbody>

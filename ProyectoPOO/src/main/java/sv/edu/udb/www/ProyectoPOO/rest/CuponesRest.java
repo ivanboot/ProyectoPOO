@@ -19,7 +19,7 @@ public class CuponesRest {
 	@Qualifier("CuponesRepository")
 	CuponesRepository cuponesRepository;
 	
-	@GetMapping()
+	@GetMapping("/lista")
 	public List<Cupones> listarCupones(){
 		return cuponesRepository.findAll();
 	}
