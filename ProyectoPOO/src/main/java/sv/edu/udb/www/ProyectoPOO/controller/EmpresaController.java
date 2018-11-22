@@ -20,7 +20,6 @@ public class EmpresaController {
 	@Qualifier("OfertasRepository")
 	OfertasRepository ofertasRepository;
 	
-	
 	@GetMapping("/inicio")
 	public String inicioEmpresa() {
 
