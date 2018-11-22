@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Lista ofertas de la empresa</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.core.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.default.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<script th:src="@{/js/jquery-1.12.0.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/alertify.js}" type="text/javascript"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"
+	type="text/javascript"></script>
+<script th:src="@{/js/sweetalert.min.js}" type="text/javascript"></script>
+<style type="text/css">
+p {
+	color: black;
+}
+
+.img-responsive {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+h3 {
+	color: #004080;
+}
+</style>
+</head>
+<body>
+	<div th:include="/template/AdminTemplate"></div>
+	<h1 class="text-center" style="color: #004080;">Lista de ofertas
+		de la empresa</h1>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div id="exTab1" class="container">
+					<ul class="nav nav-pills">
+						<li class="active"
+							style="background-color: whitesmoke; color: black;"><a
+							href="#1a" data-toggle="tab">Ofertas en espera</a></li>
+						<li style="background-color: whitesmoke; color: black;"><a
+							href="#2a" data-toggle="tab">Ofertas aprovadas</a></li>
+						<li style="background-color: whitesmoke; color: black;"><a
+							href="#3a" data-toggle="tab">Ofertas activas</a></li>
+						<li style="background-color: whitesmoke; color: black;"><a
+							href="#4a" data-toggle="tab">Ofertas finalizadas</a></li>
+						<li style="background-color: whitesmoke; color: black;"><a
+							href="#5a" data-toggle="tab">Ofertas rechazadas</a></li>
+						<li style="background-color: whitesmoke; color: black;"><a
+							href="#6a" data-toggle="tab">Ofertas descartadas</a></li>
+					</ul>
+					<div class="tab-content clearfix">
+						<div class="tab-pane active" id="1a">
+							<div th:each="ofertas : ${oEspera}">
+
+								<div
+									style="background-color: white; padding: 1%; margin-left: 1%;"
+									class="col-md-4 col-sm-6 ">
+									<div class="thumbnail">
+										<div class="text-center">
+											<img alt="img" class="img-responsive"
+												th:src="@{/images/padlock.png}">
+										</div>
+										<div class="text-center">
+											<h3 th:text="${ofertas.tituloOferta}" />
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Precio regular:</p>
+												<p th:text="'$'+${ofertas.precioRegular}" />
+											</div>
+											<div class="col-md-6">
+												<p>Precio oferta:</p>
+												<p th:text="'$'+${ofertas.precioOferta}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Fecha inicial:</p>
+												<p th:text="${ofertas.fechaInicio}" />
+											</div>
+											<div class="col-md-6">
+												<p>Fecha final:</p>
+												<p th:text="${ofertas.fechaFin}" />
+											</div>
+											<div class="col-md-12">
+												<p>Fecha limite:</p>
+												<p th:text="${ofertas.fechaLimite}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<p th:text="${ofertas.descripcionOferta}"></p>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<button type="button" class="btn btn-primary"
+											style="background-color: #004080;" data-toggle="modal"
+											th:data-target="'#exampleModal'+${ofertas.idOferta}">
+											Más detalles</button>
+									</div>
+								</div>
+								<div class="modal fade"
+									th:id="'exampleModal'+${ofertas.idOferta}" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel"
+													style="color: black;">Datos oferta</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h1 class="text-center" style="color: #004080;"
+													th:text="${ofertas.tituloOferta}"></h1>
+												<img class="img-responsive" th:src="@{/images/padlock.png}">
+												<section class="text-center" style="color: black;">
+													<div>
+														<div class="col-md-6">
+															<h3>Cupones disponibles:</h3>
+															<h4 th:text="${ofertas.cantidadLimite} "></h4>
+														</div>
+														<div class="col-md-6">
+															<h3>Ingresos totales:</h3>
+															<h4
+																th:text="'$'+${ofertas.cantidadLimite} * ${ofertas.precioRegular}"></h4>
+														</div>
+														<div class="col-md-12">
+															<h3>Cargo por servicio:</h3>
+														</div>
+													</div>
+												</section>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>
+												<a class="btn btn-success"
+													href="${pageContext.request.contextPath}/administrador.do?operacion=aprobarof&idoferta=${ofertasEspera.idOferta}&codigo=${ofertasEspera.codigoEmpresa}">Aprobar
+													oferta</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="2a">
+							<div th:each="ofertas : ${oAprovada}">
+
+								<div
+									style="background-color: white; padding: 1%; margin-left: 1%;"
+									class="col-md-4 col-sm-6 ">
+									<div class="thumbnail">
+										<div class="text-center">
+											<img alt="img" class="img-responsive"
+												th:src="@{/images/padlock.png}">
+										</div>
+										<div class="text-center">
+											<h3 th:text="${ofertas.tituloOferta}" />
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Precio regular:</p>
+												<p th:text="'$'+${ofertas.precioRegular}" />
+											</div>
+											<div class="col-md-6">
+												<p>Precio oferta:</p>
+												<p th:text="'$'+${ofertas.precioOferta}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Fecha inicial:</p>
+												<p th:text="${ofertas.fechaInicio}" />
+											</div>
+											<div class="col-md-6">
+												<p>Fecha final:</p>
+												<p th:text="${ofertas.fechaFin}" />
+											</div>
+											<div class="col-md-12">
+												<p>Fecha limite:</p>
+												<p th:text="${ofertas.fechaLimite}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<p th:text="${ofertas.descripcionOferta}"></p>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<button type="button" class="btn btn-primary"
+											style="background-color: #004080;" data-toggle="modal"
+											th:data-target="'#exampleModal'+${ofertas.idOferta}">
+											Más detalles</button>
+									</div>
+								</div>
+								<div class="modal fade"
+									th:id="'exampleModal'+${ofertas.idOferta}" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel"
+													style="color: black;">Datos oferta</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h1 class="text-center" style="color: #004080;"
+													th:text="${ofertas.tituloOferta}"></h1>
+												<img class="img-responsive" th:src="@{/images/padlock.png}">
+												<section class="text-center" style="color: black;">
+													<div>
+														<div class="col-md-6">
+															<h3>Cupones disponibles:</h3>
+															<h4 th:text="${ofertas.cantidadLimite} "></h4>
+														</div>
+														<div class="col-md-6">
+															<h3>Ingresos totales:</h3>
+															<h4
+																th:text="'$'+${ofertas.cantidadLimite} * ${ofertas.precioRegular}"></h4>
+														</div>
+														<div class="col-md-12">
+															<h3>Cargo por servicio:</h3>
+														</div>
+													</div>
+												</section>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>
+												<a class="btn btn-success"
+													th:href="@{/administrador/}">Aprobar
+													oferta</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="3a">
+							<div th:each="ofertas : ${oActiva}">
+
+								<div
+									style="background-color: white; padding: 1%; margin-left: 1%;"
+									class="col-md-4 col-sm-6 ">
+									<div class="thumbnail">
+										<div class="text-center">
+											<img alt="img" class="img-responsive"
+												th:src="@{/images/padlock.png}">
+										</div>
+										<div class="text-center">
+											<h3 th:text="${ofertas.tituloOferta}" />
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Precio regular:</p>
+												<p th:text="'$'+${ofertas.precioRegular}" />
+											</div>
+											<div class="col-md-6">
+												<p>Precio oferta:</p>
+												<p th:text="'$'+${ofertas.precioOferta}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Fecha inicial:</p>
+												<p th:text="${ofertas.fechaInicio}" />
+											</div>
+											<div class="col-md-6">
+												<p>Fecha final:</p>
+												<p th:text="${ofertas.fechaFin}" />
+											</div>
+											<div class="col-md-12">
+												<p>Fecha limite:</p>
+												<p th:text="${ofertas.fechaLimite}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<p th:text="${ofertas.descripcionOferta}"></p>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<button type="button" class="btn btn-primary"
+											style="background-color: #004080;" data-toggle="modal"
+											th:data-target="'#exampleModal'+${ofertas.idOferta}">
+											Más detalles</button>
+									</div>
+								</div>
+								<div class="modal fade"
+									th:id="'exampleModal'+${ofertas.idOferta}" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel"
+													style="color: black;">Datos oferta</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h1 class="text-center" style="color: #004080;"
+													th:text="${ofertas.tituloOferta}"></h1>
+												<img class="img-responsive" th:src="@{/images/padlock.png}">
+												<section class="text-center" style="color: black;">
+													<div>
+														<div class="col-md-6">
+															<h3>Cupones disponibles:</h3>
+															<h4 th:text="${ofertas.cantidadLimite} "></h4>
+														</div>
+														<div class="col-md-6">
+															<h3>Ingresos totales:</h3>
+															<h4
+																th:text="'$'+${ofertas.cantidadLimite} * ${ofertas.precioRegular}"></h4>
+														</div>
+														<div class="col-md-12">
+															<h3>Cargo por servicio:</h3>
+														</div>
+													</div>
+												</section>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="4a">
+							<div th:each="ofertas : ${oFinalizada}">
+
+								<div
+									style="background-color: white; padding: 1%; margin-left: 1%;"
+									class="col-md-4 col-sm-6 ">
+									<div class="thumbnail">
+										<div class="text-center">
+											<img alt="img" class="img-responsive"
+												th:src="@{/images/padlock.png}">
+										</div>
+										<div class="text-center">
+											<h3 th:text="${ofertas.tituloOferta}" />
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Precio regular:</p>
+												<p th:text="'$'+${ofertas.precioRegular}" />
+											</div>
+											<div class="col-md-6">
+												<p>Precio oferta:</p>
+												<p th:text="'$'+${ofertas.precioOferta}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Fecha inicial:</p>
+												<p th:text="${ofertas.fechaInicio}" />
+											</div>
+											<div class="col-md-6">
+												<p>Fecha final:</p>
+												<p th:text="${ofertas.fechaFin}" />
+											</div>
+											<div class="col-md-12">
+												<p>Fecha limite:</p>
+												<p th:text="${ofertas.fechaLimite}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<p th:text="${ofertas.descripcionOferta}"></p>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<button type="button" class="btn btn-primary"
+											style="background-color: #004080;" data-toggle="modal"
+											th:data-target="'#exampleModal'+${ofertas.idOferta}">
+											Más detalles</button>
+									</div>
+								</div>
+								<div class="modal fade"
+									th:id="'exampleModal'+${ofertas.idOferta}" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel"
+													style="color: black;">Datos oferta</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h1 class="text-center" style="color: #004080;"
+													th:text="${ofertas.tituloOferta}"></h1>
+												<img class="img-responsive" th:src="@{/images/padlock.png}">
+												<section class="text-center" style="color: black;">
+													<div>
+														<div class="col-md-6">
+															<h3>Cupones disponibles:</h3>
+															<h4 th:text="${ofertas.cantidadLimite} "></h4>
+														</div>
+														<div class="col-md-6">
+															<h3>Ingresos totales:</h3>
+															<h4
+																th:text="'$'+${ofertas.cantidadLimite} * ${ofertas.precioRegular}"></h4>
+														</div>
+														<div class="col-md-12">
+															<h3>Cargo por servicio:</h3>
+														</div>
+													</div>
+												</section>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="5a">
+							<div th:each="ofertas : ${oRechazada}">
+
+								<div
+									style="background-color: white; padding: 1%; margin-left: 1%;"
+									class="col-md-4 col-sm-6 ">
+									<div class="thumbnail">
+										<div class="text-center">
+											<img alt="img" class="img-responsive"
+												th:src="@{/images/padlock.png}">
+										</div>
+										<div class="text-center">
+											<h3 th:text="${ofertas.tituloOferta}" />
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Precio regular:</p>
+												<p th:text="'$'+${ofertas.precioRegular}" />
+											</div>
+											<div class="col-md-6">
+												<p>Precio oferta:</p>
+												<p th:text="'$'+${ofertas.precioOferta}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Fecha inicial:</p>
+												<p th:text="${ofertas.fechaInicio}" />
+											</div>
+											<div class="col-md-6">
+												<p>Fecha final:</p>
+												<p th:text="${ofertas.fechaFin}" />
+											</div>
+											<div class="col-md-12">
+												<p>Fecha limite:</p>
+												<p th:text="${ofertas.fechaLimite}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<p th:text="${ofertas.descripcionOferta}"></p>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<button type="button" class="btn btn-primary"
+											style="background-color: #004080;" data-toggle="modal"
+											th:data-target="'#exampleModal'+${ofertas.idOferta}">
+											Más detalles</button>
+									</div>
+								</div>
+								<div class="modal fade"
+									th:id="'exampleModal'+${ofertas.idOferta}" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel"
+													style="color: black;">Datos oferta</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h1 class="text-center" style="color: #004080;"
+													th:text="${ofertas.tituloOferta}"></h1>
+												<img class="img-responsive" th:src="@{/images/padlock.png}">
+												<section class="text-center" style="color: black;">
+													<div>
+														<div class="col-md-6">
+															<h3>Cupones disponibles:</h3>
+															<h4 th:text="${ofertas.cantidadLimite} "></h4>
+														</div>
+														<div class="col-md-6">
+															<h3>Ingresos totales:</h3>
+															<h4
+																th:text="'$'+${ofertas.cantidadLimite} * ${ofertas.precioRegular}"></h4>
+														</div>
+														<div class="col-md-12">
+															<h3>Cargo por servicio:</h3>
+														</div>
+													</div>
+												</section>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="6a">
+							<div th:each="ofertas : ${oDescartada}">
+
+								<div
+									style="background-color: white; padding: 1%; margin-left: 1%;"
+									class="col-md-4 col-sm-6 ">
+									<div class="thumbnail">
+										<div class="text-center">
+											<img alt="img" class="img-responsive"
+												th:src="@{/images/padlock.png}">
+										</div>
+										<div class="text-center">
+											<h3 th:text="${ofertas.tituloOferta}" />
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Precio regular:</p>
+												<p th:text="'$'+${ofertas.precioRegular}" />
+											</div>
+											<div class="col-md-6">
+												<p>Precio oferta:</p>
+												<p th:text="'$'+${ofertas.precioOferta}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Fecha inicial:</p>
+												<p th:text="${ofertas.fechaInicio}" />
+											</div>
+											<div class="col-md-6">
+												<p>Fecha final:</p>
+												<p th:text="${ofertas.fechaFin}" />
+											</div>
+											<div class="col-md-12">
+												<p>Fecha limite:</p>
+												<p th:text="${ofertas.fechaLimite}" />
+											</div>
+										</div>
+										<div class="text-center">
+											<p th:text="${ofertas.descripcionOferta}"></p>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<button type="button" class="btn btn-primary"
+											style="background-color: #004080;" data-toggle="modal"
+											th:data-target="'#exampleModal'+${ofertas.idOferta}">
+											Más detalles</button>
+									</div>
+								</div>
+								<div class="modal fade"
+									th:id="'exampleModal'+${ofertas.idOferta}" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel"
+													style="color: black;">Datos oferta</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h1 class="text-center" style="color: #004080;"
+													th:text="${ofertas.tituloOferta}"></h1>
+												<img class="img-responsive" th:src="@{/images/padlock.png}">
+												<section class="text-center" style="color: black;">
+													<div>
+														<div class="col-md-6">
+															<h3>Cupones disponibles:</h3>
+															<h4 th:text="${ofertas.cantidadLimite} "></h4>
+														</div>
+														<div class="col-md-6">
+															<h3>Ingresos totales:</h3>
+															<h4
+																th:text="'$'+${ofertas.cantidadLimite} * ${ofertas.precioRegular}"></h4>
+														</div>
+														<div class="col-md-12">
+															<h3>Cargo por servicio:</h3>
+														</div>
+													</div>
+												</section>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Close</button>												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer id="footer" style="width: 100%; bottom: 0;">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12">&copy; 2018 Todo ofertas.
+					Derechos reservados.</div>
+			</div>
+		</div>
+	</footer>
+	<!--/#footer-->
+	<script>
+		$(document).ready(function() {
+			$('#tabla').DataTable();
+		});
+	</script>
+</body>
+</html>

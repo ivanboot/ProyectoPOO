@@ -18,8 +18,8 @@ public interface CuponesRepository extends JpaRepository<Cupones, String>{
 	public abstract List<Cupones> findAllByClientesIdCliente(Integer id);
 	
 	@Transactional
-	@Query("SELECT c FROM Cupones c INNER JOIN c.clientes cl  WHERE cl.idCliente=?1")
-	public abstract List<Cupones> listarCuponesPorCliente(Integer id);
+	@Query("SELECT c FROM Cupones c INNER JOIN c.clientes cl  WHERE cl.idCliente=?1 AND c.estadocupon.idEstadoCupon=?2")
+	public abstract List<Cupones> listarCuponesPorCliente(Integer idCliente,Integer idEstadoCupon);
 	
 	public abstract Cupones findByCodigoCupo(String codigo);
 	

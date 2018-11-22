@@ -17,12 +17,12 @@
 <script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
 <script th:src="@{/js/dataTables.bootstrap.min.js}"
 	type="text/javascript"></script>
-	<script th:src="@{/js/sweetalert.min.js}" type="text/javascript"></script>
-	<style type="text/css">
-		p{
-			color: black;
-		}
-	</style>
+<script th:src="@{/js/sweetalert.min.js}" type="text/javascript"></script>
+<style type="text/css">
+p {
+	color: black;
+}
+</style>
 </head>
 <body>
 	<div th:include="/template/AdminTemplate"></div>
@@ -30,43 +30,45 @@
 	<div class="row">
 		<div class="col-md-12">
 			<a type="button" class="btn btn-primary btn-md"
-				th:href="@{/administrador/nuevo}"> Nueva Empresa</a>		
-		<div style="background-color: whitesmoke; padding: 2%; color: black;">
-			<table class="table table-bordered" id="tabla">
-				<thead>
-					<tr>
+				th:href="@{/administrador/nuevo}"> Nueva Empresa</a>
+			<div style="background-color: whitesmoke; padding: 2%; color: black;">
+				<table class="table table-bordered" id="tabla">
+					<thead>
+						<tr>
 
-						<th>Nombre de la empresa</th>
-						<th>Nombre contacto</th>
-						<th>Dirección</th>
-						<th>Telefono</th>
-						<th>Rubro</th>
-						<th>Comision</th>
-						<th>Correo</th>
-						<th>Operaciones</th>						
-					</tr>
-				</thead>
-				<tbody th:each="empresas : ${lista}">
-					<tr>
-						<td th:text="${empresas.codigoEmpresa}"></td>
-						<td th:text="${empresas.nombreContacto}"></td>
-						<td th:text="${empresas.direccion}"></td>
-						<td th:text="${empresas.telefono}"></td>
-						<td th:text="${empresas.rubros.rubro}"></td>
-						<td th:text="${empresas.comision}"></td>
-						<td th:text="${empresas.usuarios.correo}"></td>
-						<td><a class="btn btn-info"
-							th:href="@{'/administrador/modificar/'+${empresas.codigoEmpresa}}"><span
-								class="glyphicon glyphicon-edit"></span> Modificar</a>
-						<a class="btn btn-danger"
-							th:href="'javascript:eliminar(\'' +${empresas.codigoEmpresa}+ '\')'"><span
-								class="glyphicon glyphicon-trash"></span> Eliminar</a>
-						
-					</tr>
-				</tbody>
-			</table>
+							<th>Nombre de la empresa</th>
+							<th>Nombre contacto</th>
+							<th>Dirección</th>
+							<th>Telefono</th>
+							<th>Rubro</th>
+							<th>Comision</th>
+							<th>Correo</th>
+							<th>Operaciones</th>
+						</tr>
+					</thead>
+					<tbody th:each="empresas : ${lista}">
+						<tr>
+							<td th:text="${empresas.codigoEmpresa}"></td>
+							<td th:text="${empresas.nombreContacto}"></td>
+							<td th:text="${empresas.direccion}"></td>
+							<td th:text="${empresas.telefono}"></td>
+							<td th:text="${empresas.rubros.rubro}"></td>
+							<td th:text="${empresas.comision}"></td>
+							<td th:text="${empresas.usuarios.correo}"></td>
+							<td><a class="btn btn-info"
+								th:href="@{'/administrador/modificar/'+${empresas.codigoEmpresa}}"><span
+									class="glyphicon glyphicon-edit"></span> Modificar</a> <a
+								class="btn btn-danger"
+								th:href="'javascript:eliminar(\'' +${empresas.codigoEmpresa}+ '\')'"><span
+									class="glyphicon glyphicon-trash"></span> Eliminar</a> <a
+								class="btn btn-success"
+								th:href="@{'/administrador/lista/'+${empresas.codigoEmpresa}}"><span
+									class="glyphicon glyphicon-tags"></span> Ver ofertas</a>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
 	</div>
 
 	<footer id="footer" style="width: 100%; position: absolute; bottom: 0;">
@@ -82,30 +84,31 @@
 		$(document).ready(function() {
 			$('#tabla').DataTable();
 		});
-		
-		function eliminar(id){
-	           alertify.confirm("¿Realmente desea eliminar esta empresa?", function(e){
-	              if(e){
-	                  location.href="/administrador/borrar/"+id;
-	              } 
-	           });
-	  }
+
+		function eliminar(id) {
+			alertify.confirm("¿Realmente desea eliminar esta empresa?",
+					function(e) {
+						if (e) {
+							location.href = "/administrador/borrar/" + id;
+						}
+					});
+		}
 	</script>
 	<div th:if="${exito}">
 		<div style="display: none;" id="exito" th:text='${exito}'></div>
 		<script>
-		var exito = document.getElementById("exito").innerHTML;
-		swal("Bien!",exito,"success");
+			var exito = document.getElementById("exito").innerHTML;
+			swal("Bien!", exito, "success");
 		</script>
-		
+
 	</div>
 
-	
+
 	<div th:if="${fracaso}">
 		<div style="display: none;" id="fracaso" th:text='${fracaso}'></div>
 		<script>
-		var fracaso = document.getElementById("fracaso").innerHTML;
-		swal("Ups!", fracaso,"error");
+			var fracaso = document.getElementById("fracaso").innerHTML;
+			swal("Ups!", fracaso, "error");
 		</script>
 
 

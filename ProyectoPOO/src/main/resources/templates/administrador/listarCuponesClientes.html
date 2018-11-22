@@ -22,40 +22,128 @@
 p {
 	color: black;
 }
+
+.img-responsive {
+	margin-left: auto;
+	margin-right: auto;
+}
 </style>
 </head>
 <body>
 	<div th:include="/template/AdminTemplate"></div>
 	<h1 class="text-center" style="color: #004080;"
 		th:text="'Lista de cupones de '+${clientes.nombreClientes}+' '+${clientes.apellidosClientes}" />
-	<div class="row">
-		<div class="col-md-12">
-			<a type="button" class="btn btn-primary btn-md"
-				th:href="@{/administrador/nuevo}"> Cupones disponibles</a> <a
-				type="button" class="btn btn-primary btn-md"
-				th:href="@{/administrador/nuevo}"> Cupones canjeados</a> <a
-				type="button" class="btn btn-primary btn-md"
-				th:href="@{/administrador/nuevo}"> Cupones vencidos</a>
-			<div style="background-color: whitesmoke; padding: 2%; color: black;">
-				<div th:each="cupones : ${lista}">
+		
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">				
+				<div id="exTab1" class="container">
+					<ul class="nav nav-pills">
+						<li class="active"
+							style="background-color: whitesmoke; color: black;"><a
+							href="#1a" data-toggle="tab">Cupones disponibles</a></li>
+						<li style="background-color: whitesmoke; color: black;"><a
+							href="#2a" data-toggle="tab">Cupones canjeados</a></li>
+						<li style="background-color: whitesmoke; color: black;"><a
+							href="#3a" data-toggle="tab">Cupones vencidos</a></li>
+					</ul>
+					<div class="tab-content clearfix">
+						<div class="tab-pane active" id="1a">
+							<div th:each="cupones : ${disponibles}">
 
-					<div style="background-color: white; padding: 1%;" class="col-md-4">
-						<div class="thumbnail">
-							<div class="text-center">
-								<img alt="img" class="img-responsive" th:src="@{/images/padlock.png}">
+								<div
+									style="background-color: white; padding: 1%; margin-left: 1%;"
+									class="col-md-4 col-sm-6 ">
+									<div class="thumbnail">
+										<div class="text-center">
+											<img alt="img" class="img-responsive"
+												th:src="@{/images/padlock.png}">
+										</div>
+										<div class="text-center">
+											<h3 th:text="${cupones.ofertas.tituloOferta}" />
+											<p>Código del cupón</p>
+											<h4 style="color: black;" th:text="${cupones.codigoCupo}" />
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Fecha compra:</p>
+												<p th:text="${cupones.fechaCompra}" />
+											</div>
+											<div class="col-md-6">
+												<p>Fecha limite:</p>
+												<p th:text="${cupones.ofertas.fechaLimite}" />
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="text-center">
-								<h3 th:text="${cupones.ofertas.tituloOferta}" />
+						</div>
+						<div class="tab-pane" id="2a">
+							<div th:each="cupones : ${canjeados}">
+
+								<div
+									style="background-color: white; padding: 1%; margin-left: 1%;"
+									class="col-md-4 col-sm-6 ">
+									<div class="thumbnail">
+										<div class="text-center">
+											<img alt="img" class="img-responsive"
+												th:src="@{/images/padlock.png}">
+										</div>
+										<div class="text-center">
+											<h3 th:text="${cupones.ofertas.tituloOferta}" />
+											<p>Código del cupón</p>
+											<h4 style="color: black;" th:text="${cupones.codigoCupo}" />
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Fecha compra:</p>
+												<p th:text="${cupones.fechaCompra}" />
+											</div>
+											<div class="col-md-6">
+												<p>Fecha limite:</p>
+												<p th:text="${cupones.fechaCanje}" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="3a">
+							<div th:each="cupones : ${vencidos}">
+
+								<div
+									style="background-color: white; padding: 1%; margin-left: 1%;"
+									class="col-md-4 col-sm-6 ">
+									<div class="thumbnail">
+										<div class="text-center">
+											<img alt="img" class="img-responsive"
+												th:src="@{/images/padlock.png}">
+										</div>
+										<div class="text-center">
+											<h3 th:text="${cupones.ofertas.tituloOferta}" />
+											<p>Código del cupón</p>
+											<h4 style="color: black;" th:text="${cupones.codigoCupo}" />
+										</div>
+										<div class="text-center">
+											<div class="col-md-6">
+												<p>Fecha compra:</p>
+												<p th:text="${cupones.fechaCompra}" />
+											</div>
+											<div class="col-md-6">
+												<p>Fecha limite:</p>
+												<p th:text="${cupones.ofertas.fechaLimite}" />
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<footer id="footer" style="width: 100%; position: absolute; bottom: 0;">
+	<footer id="footer" style="width: 100%; bottom: 0;">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12 col-md-12">&copy; 2018 Todo ofertas.

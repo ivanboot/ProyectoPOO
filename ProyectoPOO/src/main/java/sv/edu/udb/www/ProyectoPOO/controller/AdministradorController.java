@@ -33,6 +33,7 @@ import sv.edu.udb.www.ProyectoPOO.entities.Usuarios;
 import sv.edu.udb.www.ProyectoPOO.repositories.ClientesRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.CuponesRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.EmpresasRepository;
+import sv.edu.udb.www.ProyectoPOO.repositories.OfertasRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.RubrosRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.UsuariosRepository;
 import sv.edu.udb.www.ProyectoPOO.utils.Correo;
@@ -62,11 +63,15 @@ public class AdministradorController {
 	@Autowired
 	@Qualifier("CuponesRepository")
 	CuponesRepository cuponesRepository;
+	
+	@Autowired
+	@Qualifier("OfertasRepository")
+	OfertasRepository ofertasRepository;
 
 	@GetMapping("/inicio")
 	public String inicioAdmin() {
 
-		System.out.println("Si entra");
+		
 		return "/administrador/index";
 
 	}
@@ -76,6 +81,19 @@ public class AdministradorController {
 		model.addAttribute("lista", empresasRepository.findAllByOrderByNombreEmpresa());
 		return "/administrador/listarEmpresas";
 
+	}
+	
+	@GetMapping("/lista/{codigo}")
+	public String listarOfertasEmpresas(@PathVariable("codigo") String codigo, Model model) {
+		System.out.println("Entra al metodo");
+		model.addAttribute("oEspera", ofertasRepository.listarOfertasPorEmpresa(codigo,1));
+		model.addAttribute("oAprovada", ofertasRepository.listarOfertasPorEmpresa(codigo,2));
+		model.addAttribute("oActiva", ofertasRepository.listarOfertasPorEmpresa(codigo,3));
+		model.addAttribute("oFinalizada", ofertasRepository.listarOfertasPorEmpresa(codigo,4));
+		model.addAttribute("oRechazada", ofertasRepository.listarOfertasPorEmpresa(codigo,5));
+		model.addAttribute("oDescartada", ofertasRepository.listarOfertasPorEmpresa(codigo,6));
+		
+		return "/administrador/listarOfertasEmpresas";
 	}
 
 	@GetMapping("/nuevo")
@@ -171,7 +189,7 @@ public class AdministradorController {
 			model.addAttribute("listarubros", rubrosRepository.findAllByOrderByRubro());
 			return "/administrador/modificarEmpresa";
 		} else {
-
+			
 			System.out.println(usuarios.getContrasena());
 			System.out.println(usuarios.getIdConfirmacion());
 			System.out.println(usuarios.getCorreo());
@@ -314,10 +332,14 @@ public class AdministradorController {
 	public String listarCuponesClientes(@PathVariable("codigo") String codigo,Model model) {
 		model.addAttribute("clientes", clientesRepository.findByIdCliente(Integer.parseInt(codigo)));
 		try {
-		model.addAttribute("lista", cuponesRepository.listarCuponesPorCliente(Integer.parseInt(codigo)));
+		model.addAttribute("disponibles", cuponesRepository.listarCuponesPorCliente(Integer.parseInt(codigo),1));
+		model.addAttribute("canjeados", cuponesRepository.listarCuponesPorCliente(Integer.parseInt(codigo),2));
+		model.addAttribute("vencidos", cuponesRepository.listarCuponesPorCliente(Integer.parseInt(codigo),3));
 		}catch(Exception e) {
 			System.out.println(e);
 		}
 		return "/administrador/listarCuponesClientes";
 	}
+	
+	
 }
