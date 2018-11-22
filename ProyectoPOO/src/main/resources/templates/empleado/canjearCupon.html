@@ -23,7 +23,7 @@
 		<div class="container">
 			<div style="background-color: whitesmoke; padding: 2%; color: black; margin-top: 2%; margin-bottom: 2%;">
 				<form class="contenform" action="#" 
-				th:action="@{/empleado/canjear/obtenerCupon}" method="post" th:object="${cupones}">
+				th:action="@{/empleado/canjear/obtenerCupon}" method="POST" th:object="${cupones}">
 				
 					<h1>Canjear Cupón</h1>
 					
@@ -50,7 +50,7 @@
 							</div>
 						</div>
 					</div>
-					<input type="submit" class="btn btn-info" value="Mostrar cupón" name="Guardar">
+					 <input type="submit" class="btn btn-info" value="Mostrar Cupon" name="Mostrar">
 				</form>
 			</div>
 		</div>

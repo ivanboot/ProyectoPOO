@@ -24,26 +24,32 @@
 			<h1 style="color: black; text-align: center;">Mostrar Cupón</h1>
 			<div style="background-color: whitesmoke; padding: 2%; color: black; margin-top: 2%; margin-bottom: 2%;">
 				
-					<h4>Titulo de oferta:</h4>
-					<label>Titulo de oferta</label>
-		
-					<h4>Código:</h4>
-					<label>...</label>
-				
-					<h4>Fecha de compra:</h4>
-					<label>...</label>
-				
-					<h4>Descripción:</h4>
-					<label>...</label>
-				
-					<h4>Otros detalles:</h4>
-					<label>...</label>
-				
-					<h4>Cliente:</h4>
-					<label>...</label>
-				
-					<h4>Estado:</h4>
-					<label>...</label>
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>Titulo oferta</th>
+								<th>Código</th>
+								<th>Fecha compra</th>
+								<th>Descripción</th>
+								<th>Detalles</th>
+								<th>Nombres clientes</th>
+								<th>Apellidos clientes</th>
+								<th>Estado</th>
+							</tr>
+						</thead>
+						<tbody th:each="cupones: ${cupones}">
+							<tr>
+								<td th:text="${cupones.ofertas.tituloOferta}"></td>
+								<td th:text="${cupones.codigoCupo}"></td>
+								<td th:text="${cupones.fechaCompra}"></td>
+								<td th:text="${cupones.ofertas.descripcionOferta}"></td>
+								<td th:text="${cupones.ofertas.otrosDetalles}"></td>
+								<td th:text="$cupones.clientes.nombreClientes"></td>
+								<td th:text="${cupones.clientes.apellidosClientes}"></td>
+								<td th:text="${cupones.estadocupon.estado}"></td>
+							</tr>
+						</tbody>
+					</table>
 			</div>
 		</div>
 	</body>
