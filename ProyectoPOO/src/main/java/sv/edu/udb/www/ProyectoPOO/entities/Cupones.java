@@ -63,7 +63,7 @@ public class Cupones  implements java.io.Serializable {
     public void setCodigoCupo(String codigoCupo) {
         this.codigoCupo = codigoCupo;
     }
-//@JsonIgnore
+@JsonIgnore
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="IdCliente", nullable=false)
     public Clientes getClientes() {
@@ -74,7 +74,7 @@ public class Cupones  implements java.io.Serializable {
         this.clientes = clientes;
     }
     
-//@JsonIgnore
+@JsonIgnore
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="IdEstadoCupon", nullable=false)
     public Estadocupon getEstadocupon() {
@@ -85,7 +85,7 @@ public class Cupones  implements java.io.Serializable {
         this.estadocupon = estadocupon;
     }
 
-    //@JsonIgnore
+    @JsonIgnore
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="IdOferta", nullable=false)
     public Ofertas getOfertas() {

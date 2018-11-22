@@ -38,6 +38,12 @@ public class EmpleadoController {
 		return "/empleado/canjearCupon";
 	}
 	
+	@GetMapping("/mostrarCupon")
+	public String mostrarCupon(Model model) {
+		model.addAttribute("cupones", new Cupones());
+		return "/empleado/mostrarCupones";
+	}
+	
 	@PostMapping("/canjear/obtenerCupon")
 	public String obtenerCupon(@Valid @ModelAttribute("cupones")Cupones cupones, BindingResult result,
 			Model model) {
