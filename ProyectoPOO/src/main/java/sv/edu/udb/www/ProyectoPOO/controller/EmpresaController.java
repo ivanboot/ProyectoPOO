@@ -27,7 +27,7 @@ public class EmpresaController {
 
 	}
 	
-	@GetMapping("/listar Ofertas")
+	@GetMapping("/listarOfertas")
 	public String listarOfertas(Model model) {
 
 		model.addAttribute("lista", ofertasRepository.findAllByOrderByTituloOferta());
