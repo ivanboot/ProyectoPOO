@@ -29,19 +29,180 @@
 	<h1 class="text-center" style="color: #004080;">Lista cupones</h1>
 	<div class="row">
 		<div class="col-md-12">
+			<div class="col-md-12">
 			
+			<a type="button" class="btn btn-primary btn-md"
+				th:href="@{/empresa/nuevaOferta}"> Nueva Oferta</a>
+				
+				
+				
 		<div style="background-color: whitesmoke; padding: 2%; color: black;">
+			<h2>Ofertas Activas</h2>
 			<table class="table table-bordered" id="tabla">
 				<thead>
 					<tr>
 
-						<th>Titulo</th>					
+						<th>Titulo</th>
+						<th>Precio</th>
+						<th>Fecha Inicio</th>
+						<th>Fecha Fin</th>
+						<th>Existencias</th>
+						<th>Estado</th>					
 					</tr>
 				</thead>
 				<tbody th:each="oferta : ${lista}">
-					<tr>
-						<td th:text="${oferta.tituloOferta}"></td>						
+					
+					<tr th:if="${oferta.estadooferta.estado=='Activa'}">
 						
+						<td th:text="${oferta.tituloOferta}"></td>
+						<td th:text="${oferta.precioOferta}"></td>
+						<td th:text="${oferta.fechaInicio}"></td>
+						<td th:text="${oferta.fechaFin}"></td>
+						<td th:text="${oferta.cantidadLimite}"></td>						
+						<td th:text="${oferta.estadooferta.estado}"></td>	
+					
+					</tr>
+					
+					
+				</tbody>
+			</table>
+			<br><br>
+			
+			<h2>Ofertas en Espera</h2>
+			<table class="table table-bordered" id="tabla">
+				<thead>
+					<tr>
+
+						<th>Titulo</th>
+						<th>Precio</th>
+						<th>Fecha Inicio</th>
+						<th>Fecha Fin</th>
+						<th>Existencias</th>
+						<th>Estado</th>					
+					</tr>
+				</thead>
+				<tbody th:each="oferta : ${lista}">
+					<tr th:if="${oferta.estadooferta.estado=='En espera'}">
+						
+						<td th:text="${oferta.tituloOferta}"></td>
+						<td th:text="${oferta.precioOferta}"></td>
+						<td th:text="${oferta.fechaInicio}"></td>
+						<td th:text="${oferta.fechaFin}"></td>
+						<td th:text="${oferta.cantidadLimite}"></td>						
+						<td th:text="${oferta.estadooferta.estado}"></td>	
+					
+					</tr>
+				</tbody>
+			</table>
+			
+			<br><br>
+			<h2>Ofertas Aprovadas</h2>
+			<table class="table table-bordered" id="tabla">
+				<thead>
+					<tr>
+
+						<th>Titulo</th>
+						<th>Precio</th>
+						<th>Fecha Inicio</th>
+						<th>Fecha Fin</th>
+						<th>Existencias</th>
+						<th>Estado</th>					
+					</tr>
+				</thead>
+				<tbody th:each="oferta : ${lista}">
+					<tr th:if="${oferta.estadooferta.estado=='Aprovada'}">
+						
+						<td th:text="${oferta.tituloOferta}"></td>
+						<td th:text="${oferta.precioOferta}"></td>
+						<td th:text="${oferta.fechaInicio}"></td>
+						<td th:text="${oferta.fechaFin}"></td>
+						<td th:text="${oferta.cantidadLimite}"></td>						
+						<td th:text="${oferta.estadooferta.estado}"></td>	
+					
+					</tr>
+				</tbody>
+			</table>
+			
+			<br><br>
+			<h2>Ofertas Finalizadas</h2>
+			<table class="table table-bordered" id="tabla">
+				<thead>
+					<tr>
+
+						<th>Titulo</th>
+						<th>Precio</th>
+						<th>Fecha Inicio</th>
+						<th>Fecha Fin</th>
+						<th>Existencias</th>
+						<th>Estado</th>					
+					</tr>
+				</thead>
+				<tbody th:each="oferta : ${lista}">
+					<tr th:if="${oferta.estadooferta.estado=='Finalizada'}">
+						
+						<td th:text="${oferta.tituloOferta}"></td>
+						<td th:text="${oferta.precioOferta}"></td>
+						<td th:text="${oferta.fechaInicio}"></td>
+						<td th:text="${oferta.fechaFin}"></td>
+						<td th:text="${oferta.cantidadLimite}"></td>						
+						<td th:text="${oferta.estadooferta.estado}"></td>	
+					
+					</tr>
+				</tbody>
+			</table>
+			
+			
+			<br><br>
+			<h2>Ofertas Rechazadas</h2>
+			<table class="table table-bordered" id="tabla">
+				<thead>
+					<tr>
+
+						<th>Titulo</th>
+						<th>Precio</th>
+						<th>Fecha Inicio</th>
+						<th>Fecha Fin</th>
+						<th>Existencias</th>
+						<th>Estado</th>					
+					</tr>
+				</thead>
+				<tbody th:each="oferta : ${lista}">
+					<tr th:if="${oferta.estadooferta.estado=='Rechazada'}">
+						
+						<td th:text="${oferta.tituloOferta}"></td>
+						<td th:text="${oferta.precioOferta}"></td>
+						<td th:text="${oferta.fechaInicio}"></td>
+						<td th:text="${oferta.fechaFin}"></td>
+						<td th:text="${oferta.cantidadLimite}"></td>						
+						<td th:text="${oferta.estadooferta.estado}"></td>	
+					
+					</tr>
+				</tbody>
+			</table>
+			<br><br>
+			<h2>Ofertas Descartada</h2>
+			<table class="table table-bordered" id="tabla">
+				<thead>
+					<tr>
+
+						<th>Titulo</th>
+						<th>Precio</th>
+						<th>Fecha Inicio</th>
+						<th>Fecha Fin</th>
+						<th>Existencias</th>
+						<th>Estado</th>					
+					</tr>
+				</thead>
+				<tbody th:each="oferta : ${lista}">
+					<tr th:if="${oferta.estadooferta.estado=='Descartada'}">
+						
+						<td th:text="${oferta.tituloOferta}"></td>
+						<td th:text="${oferta.precioOferta}"></td>
+						<td th:text="${oferta.fechaInicio}"></td>
+						<td th:text="${oferta.fechaFin}"></td>
+						<td th:text="${oferta.cantidadLimite}"></td>						
+						<td th:text="${oferta.estadooferta.estado}"></td>	
+					
 					</tr>
 				</tbody>
 			</table>
@@ -49,14 +210,7 @@
 	</div>
 	</div>
 
-	<footer id="footer" style="width: 100%; position: absolute; bottom: 0;">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12 col-md-12">&copy; 2018 Todo ofertas.
-					Derechos reservados.</div>
-			</div>
-		</div>
-	</footer>
+	
 	<!--/#footer-->
 	<script>
 		$(document).ready(function() {
