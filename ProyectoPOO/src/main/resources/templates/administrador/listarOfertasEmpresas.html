@@ -146,7 +146,7 @@ h3 {
 												<button type="button" class="btn btn-secondary"
 													data-dismiss="modal">Close</button>
 												<a class="btn btn-success"
-													href="${pageContext.request.contextPath}/administrador.do?operacion=aprobarof&idoferta=${ofertasEspera.idOferta}&codigo=${ofertasEspera.codigoEmpresa}">Aprobar
+													th:href="@{'/administrador/lista/'+${ofertas.idOferta}+'/'+${codigo}}">Aprobar
 													oferta</a>
 											</div>
 										</div>
@@ -241,9 +241,7 @@ h3 {
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary"
 													data-dismiss="modal">Close</button>
-												<a class="btn btn-success"
-													href="#">Aprobar
-													oferta</a>
+												
 											</div>
 										</div>
 									</div>

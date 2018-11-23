@@ -27,6 +27,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import sv.edu.udb.www.ProyectoPOO.entities.Empresas;
+import sv.edu.udb.www.ProyectoPOO.entities.Estadooferta;
+import sv.edu.udb.www.ProyectoPOO.entities.Ofertas;
 import sv.edu.udb.www.ProyectoPOO.entities.Rubros;
 import sv.edu.udb.www.ProyectoPOO.entities.Tipousuario;
 import sv.edu.udb.www.ProyectoPOO.entities.Usuarios;
@@ -85,7 +87,8 @@ public class AdministradorController {
 	
 	@GetMapping("/lista/{codigo}")
 	public String listarOfertasEmpresas(@PathVariable("codigo") String codigo, Model model) {
-		System.out.println("Entra al metodo");
+		
+		model.addAttribute("codigo", codigo);
 		model.addAttribute("oEspera", ofertasRepository.listarOfertasPorEmpresa(codigo,1));
 		model.addAttribute("oAprovada", ofertasRepository.listarOfertasPorEmpresa(codigo,2));
 		model.addAttribute("oActiva", ofertasRepository.listarOfertasPorEmpresa(codigo,3));
@@ -94,6 +97,28 @@ public class AdministradorController {
 		model.addAttribute("oDescartada", ofertasRepository.listarOfertasPorEmpresa(codigo,6));
 		
 		return "/administrador/listarOfertasEmpresas";
+	}
+	
+	@GetMapping("/lista/{codigo}/{codigo2}")
+	public String aprovarOferta(@PathVariable("codigo") Integer codigo,@PathVariable("codigo2") String codigo2, 
+			Model model,RedirectAttributes atributos ) {
+		
+		Ofertas ofertas = new Ofertas();
+		
+		ofertas=ofertasRepository.findByIdOferta(codigo);
+		
+		if(ofertas!=null) {
+			System.out.println("Entra al metodo");
+			Estadooferta estadooferta = new Estadooferta();
+			estadooferta.setIdEstadoOferta(2);
+			ofertas.setEstadooferta(estadooferta);
+			ofertasRepository.save(ofertas);
+			atributos.addFlashAttribute("exito", "Oferta aceptada!");
+		}else {
+			atributos.addFlashAttribute("fracaso", "La oferta no pudo ser aceptada...");
+		}
+		
+		return "redirect:/administrador/lista/"+codigo2;
 	}
 
 	@GetMapping("/nuevo")
@@ -305,8 +330,8 @@ public class AdministradorController {
 			rubros = rubrosRepository.findByIdRubro(codigo);
 
 			if (rubrosRepository.findByRubro(rubros.getRubro()) != null) {
-				System.out.println(rubros.getRubro());
-				rubrosRepository.borrarRubrosPorId(rubros.getRubro());
+				//System.out.println(rubros.getRubro());
+				rubrosRepository.borrarRubrosPorId(rubros.getRubro());				
 				atributos.addFlashAttribute("exito", "El rubro ha sido eliminado exitosamente!");
 			} else {
 				atributos.addFlashAttribute("fracaso", "El rubro no pudo ser eliminado...");
