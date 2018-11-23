@@ -14,6 +14,7 @@ import sv.edu.udb.www.ProyectoPOO.entities.Empresas;
 import sv.edu.udb.www.ProyectoPOO.entities.Tipousuario;
 import sv.edu.udb.www.ProyectoPOO.entities.Usuarios;
 import sv.edu.udb.www.ProyectoPOO.repositories.ClientesRepository;
+import sv.edu.udb.www.ProyectoPOO.repositories.EmpresasRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.UsuariosRepository;
 import sv.edu.udb.www.ProyectoPOO.utils.Correo;
 import sv.edu.udb.www.ProyectoPOO.utils.SecurityUtils;
@@ -30,6 +31,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Controller
 public class LoginController {
@@ -41,6 +43,10 @@ public class LoginController {
 	@Autowired
 	@Qualifier("ClientesRepository")
 	ClientesRepository clientesRepository;
+	
+	@Autowired
+	@Qualifier("EmpresasRepository")
+	EmpresasRepository empresasRepository;
 
 	@GetMapping("/login")
 	public String showFormLogin(Model model) {
@@ -53,12 +59,39 @@ public class LoginController {
 			SimpleGrantedAuthority simpleGrantedAuthority = (SimpleGrantedAuthority) iterator.next();
 			tipoUsuario = simpleGrantedAuthority.toString();
 		}
+		
+		
+				
 
 		if (tipoUsuario.equals("Administrador")) {
 			return "/administrador/index";
-		} else if (tipoUsuario.equals("Cliente")) {
-			return "/cliente/index";
+		} else if (tipoUsuario.equals("Cliente")) {								
+			return "redirect:/cliente/inicio";
 		} else if (tipoUsuario.equals("Empresa")) {
+			
+			
+			//Obtener usuario logueado y empresa según el usuario logueado
+			
+			Authentication auth = SecurityContextHolder
+		            .getContext()
+		            .getAuthentication();
+		    UserDetails userDetail = (UserDetails) auth.getPrincipal();
+		    
+		    Usuarios usuario = new Usuarios();
+		    
+		    usuario = usuariosRepository.findByCorreo(userDetail.getUsername());
+		    
+		    //En el repositorio de empresas crea un método para obtener la empresa según el id del usuario
+		    
+	    	Empresas empresa = new Empresas();
+	    	
+	    	empresa = empresasRepository.obtenerEmpresaPorUsuario(usuario.getIdUsuario());
+	    	
+	    	System.out.println(empresa.getCodigoEmpresa());
+		    
+		    //fin obtener usuario logueado
+	    	
+			
 			return "/empresa/index";
 		} else if (tipoUsuario.equals("Empleado")) {
 			return "/empleado/index";

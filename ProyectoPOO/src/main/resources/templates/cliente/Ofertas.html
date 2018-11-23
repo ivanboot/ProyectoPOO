@@ -22,29 +22,12 @@
 <body>
 	<div th:include="/template/ClienteTemplate"></div>
 
-	<section id="hero-banner"
-		style="background: #FFFFFF url(/images/ofertas.jpg); background-size: cover;">
-		<div class="banner-inner">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6">
-						<h2 style="color: #3EC1D5;">Todo Ofertas</h2>
-						<p>Bienvenido al lugar donde encontraras las mejores ofertas.</p>
-						<a class="btn btn-primary btn-lg" href="#mainservice"
-							style="background: #004080;">Ver ofertas</a>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
 
 	<section id="mainservice">
 		<div class="container">
 
 			<div class="section-header">
-				<h2 class="section-title wow fadeInDown" style="color: #004080;">Últimas
-					Ofertas</h2>
+				<h2 class="section-title wow fadeInDown" style="color: #004080;">Ofertas</h2>
 				<p class="wow fadeInDown"></p>
 			</div>
 
@@ -72,14 +55,12 @@
 
 								<div class="col-md-6">
 									<p>
-									
-									
-										<h4 style="font-size: 18px;"
-											th:text="'$'+${ofertas.precioOferta} "></h4>
-									
-										<h4 style="text-decoration: line-through;"
-											th:text="'$'+${ofertas.precioRegular}"></h4>
-									
+									<h4 style="font-size: 18px;"
+										th:text="'$'+${ofertas.precioOferta} "></h4>
+
+									<h4 style="text-decoration: line-through;"
+										th:text="'$'+${ofertas.precioRegular}"></h4>
+
 									</p>
 								</div>
 
