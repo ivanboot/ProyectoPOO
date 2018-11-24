@@ -12,6 +12,9 @@ public interface OfertasRepository extends JpaRepository<Ofertas, String>{
 	
 	public abstract List<Ofertas> findByTituloOferta(String titulo);
 	public abstract List<Ofertas> findAllByOrderByTituloOferta();
+	
+	@Query("SELECT o FROM Ofertas o INNER JOIN o.empresas e INNER JOIN o.estadooferta es WHERE e.codigoEmpresa=?1")
+	public abstract List<Ofertas> listarOfertasPorEmp(String codigoEmpresa);
 			
 	@Query("SELECT o FROM Ofertas o INNER JOIN o.empresas e INNER JOIN o.estadooferta es WHERE e.codigoEmpresa=?1 AND es.idEstadoOferta=?2")
 	public abstract List<Ofertas> listarOfertasPorEmpresa(String codigoEmpresa,Integer idEstadoOferta);

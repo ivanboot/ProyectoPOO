@@ -56,8 +56,21 @@ public class EmpresaController {
 	
 	@GetMapping("/listarOfertas")
 	public String listarOfertas(Model model) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    UserDetails userDetail = (UserDetails) auth.getPrincipal();
+	    
+	    Usuarios usuario = new Usuarios();
+	    
+	    usuario = usuariosRepository.findByCorreo(userDetail.getUsername());
+	    
+	    
+		Empresas empresa = new Empresas();
+		
+		empresa = empresasRepository.obtenerEmpresaPorUsuario(usuario.getIdUsuario());
+		
 
-		model.addAttribute("lista", ofertasRepository.findAllByOrderByTituloOferta());
+		model.addAttribute("lista", ofertasRepository.listarOfertasPorEmp(empresa.getCodigoEmpresa()));
 
 		return "/empresa/listarOfertas";
 
@@ -110,7 +123,7 @@ public class EmpresaController {
 			
 		}
 		
-		return "/empresa/listarOfertas";
+		return "redirect:/empresa/listarOfertas";
 		
 	}
 	
