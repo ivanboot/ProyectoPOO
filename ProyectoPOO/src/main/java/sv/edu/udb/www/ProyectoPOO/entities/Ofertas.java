@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -37,9 +39,15 @@ public class Ofertas  implements java.io.Serializable {
      private Integer idOferta;
      private Empresas empresas;
      private Estadooferta estadooferta;
+     @NotBlank(message="El titulo es requerido")
      private String tituloOferta;
+     
+     @NotNull(message="Precio regular requerido")
      private BigDecimal precioRegular;
+     @NotNull(message="Precio oferta requerido")
      private BigDecimal precioOferta;
+     
+     @NotNull(message="Fecha inicial requerido")
      private Date fechaInicio;
      private Date fechaFin;
      private Date fechaLimite;

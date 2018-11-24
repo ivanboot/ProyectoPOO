@@ -74,8 +74,17 @@ public class EmpresaController {
 		
 		empresa = empresasRepository.obtenerEmpresaPorUsuario(usuario.getIdUsuario());
 		
+		String codigoEmpresa = empresa.getCodigoEmpresa();
+		Integer idUsuario = usuario.getIdUsuario();
+		
 
-		model.addAttribute("lista", ofertasRepository.listarOfertasPorEmp(empresa.getCodigoEmpresa()));
+		model.addAttribute("oEspera", ofertasRepository.listarOfertasPorEmpresa(codigoEmpresa,1,idUsuario) );
+		model.addAttribute("oAprovada", ofertasRepository.listarOfertasPorEmpresa(codigoEmpresa,2,idUsuario) );
+		model.addAttribute("oActiva", ofertasRepository.listarOfertasPorEmpresa(codigoEmpresa,3,idUsuario) );
+		model.addAttribute("oFinalizada", ofertasRepository.listarOfertasPorEmpresa(codigoEmpresa,4,idUsuario) );
+		model.addAttribute("oRechazada", ofertasRepository.listarOfertasPorEmpresa(codigoEmpresa,5,idUsuario) );
+		model.addAttribute("oDescartada", ofertasRepository.listarOfertasPorEmpresa(codigoEmpresa,6,idUsuario) );
+		
 
 		return "/empresa/listarOfertas";
 
