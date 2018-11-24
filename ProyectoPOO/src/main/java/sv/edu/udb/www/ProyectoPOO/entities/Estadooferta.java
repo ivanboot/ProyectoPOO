@@ -34,8 +34,8 @@ public class Estadooferta  implements java.io.Serializable {
     }
 
 	
-    public Estadooferta(String estado) {
-        this.estado = estado;
+    public Estadooferta(int idEstadoOferta) {
+        this.idEstadoOferta = idEstadoOferta;
     }
     public Estadooferta(String estado, Set<Ofertas> ofertases) {
        this.estado = estado;

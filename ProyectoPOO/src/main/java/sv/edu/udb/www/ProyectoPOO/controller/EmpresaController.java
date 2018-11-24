@@ -86,13 +86,6 @@ public class EmpresaController {
 			return "/empresa/nuevaOferta";
 		} else {
 			
-			Date fecha1 = new SimpleDateFormat("yyyy-MM-dd").parse(ofertas.getFechaInicio().toString());
-			Date fecha2 = new SimpleDateFormat("yyyy-MM-dd").parse(ofertas.getFechaFin().toString());
-			Date fecha3 = new SimpleDateFormat("yyyy-MM-dd").parse(ofertas.getFechaLimite().toString());
-			
-			ofertas.setFechaInicio(fecha1);
-			ofertas.setFechaFin(fecha2);
-			ofertas.setFechaLimite(fecha3);
 			
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		    UserDetails userDetail = (UserDetails) auth.getPrincipal();
@@ -108,7 +101,10 @@ public class EmpresaController {
 			empresa = empresasRepository.obtenerEmpresaPorUsuario(usuario.getIdUsuario());
 			
 			ofertas.setEmpresas(empresa);
-			ofertas.setEstadooferta(new Estadooferta("En espera"));
+			ofertas.setEstadooferta(new Estadooferta(1));
+			
+			System.out.println(ofertas.getEmpresas().getCodigoEmpresa());
+			System.out.println(ofertas.getEstadooferta().getIdEstadoOferta());
 			
 			ofertasRepository.save(ofertas);
 			

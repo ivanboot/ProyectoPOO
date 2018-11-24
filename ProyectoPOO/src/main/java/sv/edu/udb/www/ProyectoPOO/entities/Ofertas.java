@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -142,7 +144,8 @@ public class Ofertas  implements java.io.Serializable {
     public void setPrecioOferta(BigDecimal precioOferta) {
         this.precioOferta = precioOferta;
     }
-
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @Column(name="FechaInicio", nullable=false, length=10)
     public Date getFechaInicio() {
@@ -152,7 +155,8 @@ public class Ofertas  implements java.io.Serializable {
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
-
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @Column(name="FechaFin", nullable=false, length=10)
     public Date getFechaFin() {
@@ -163,6 +167,7 @@ public class Ofertas  implements java.io.Serializable {
         this.fechaFin = fechaFin;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @Column(name="FechaLimite", nullable=false, length=10)
     public Date getFechaLimite() {
