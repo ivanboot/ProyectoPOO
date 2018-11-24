@@ -94,7 +94,7 @@ public class EmpresaController {
 		    
 		    usuario = usuariosRepository.findByCorreo(userDetail.getUsername());
 		    
-		    //En el repositorio de empresas crea un método para obtener la empresa según el id del usuario
+		    //En el  repositorio de empresas crea un método para obtener la empresa según el id del usuario
 		    
 			Empresas empresa = new Empresas();
 			
