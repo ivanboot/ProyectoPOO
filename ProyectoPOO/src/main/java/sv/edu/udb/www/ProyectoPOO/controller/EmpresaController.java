@@ -26,6 +26,7 @@ import sv.edu.udb.www.ProyectoPOO.entities.Estadooferta;
 import sv.edu.udb.www.ProyectoPOO.entities.Ofertas;
 import sv.edu.udb.www.ProyectoPOO.entities.Usuarios;
 import sv.edu.udb.www.ProyectoPOO.repositories.CuponesRepository;
+import sv.edu.udb.www.ProyectoPOO.repositories.EmpleadoRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.EmpresasRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.OfertasRepository;
 import sv.edu.udb.www.ProyectoPOO.repositories.UsuariosRepository;
@@ -38,6 +39,10 @@ public class EmpresaController {
 	@Autowired
 	@Qualifier("OfertasRepository")
 	OfertasRepository ofertasRepository;
+	
+	@Autowired
+	@Qualifier("EmpleadoRepository")
+	EmpleadoRepository empleadoRepository;
 	
 	@Autowired
 	@Qualifier("UsuariosRepository")
@@ -73,6 +78,29 @@ public class EmpresaController {
 		model.addAttribute("lista", ofertasRepository.listarOfertasPorEmp(empresa.getCodigoEmpresa()));
 
 		return "/empresa/listarOfertas";
+
+	}
+	
+	
+	@GetMapping("/listarEmpleados")
+	public String listarEmpleados(Model model) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    UserDetails userDetail = (UserDetails) auth.getPrincipal();
+	    
+	    Usuarios usuario = new Usuarios();
+	    
+	    usuario = usuariosRepository.findByCorreo(userDetail.getUsername());
+	    
+	    
+		Empresas empresa = new Empresas();
+		
+		empresa = empresasRepository.obtenerEmpresaPorUsuario(usuario.getIdUsuario());
+		
+
+		model.addAttribute("lista", empleadoRepository.listarEmpleados(empresa.getCodigoEmpresa()));
+
+		return "/empresa/listarEmpleados";
 
 	}
 	
