@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -32,8 +33,12 @@ public class Usuarios  implements java.io.Serializable {
      private Integer idUsuario;
      private Tipousuario tipousuario;
           
+     @NotBlank(message="Debe ingresar el correo")
+     @Pattern(regexp = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" ,message="Debe ingresar un correo valido")
      private String correo;
      
+     @NotBlank(message="Debe ingresar una contraseña")
+     @Pattern(regexp = "(?=^.{8,}$)((?=.*\\\\d)|(?=.*\\\\W+))(?![.\\\\n])(?=.*[A-Z])(?=.*[a-z]).*$" ,message="Debe ingresar una contraseña valida")
      private String contrasena;
      private boolean confirmado;
      private String idConfirmacion;

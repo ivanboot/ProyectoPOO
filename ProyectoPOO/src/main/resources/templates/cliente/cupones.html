@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<title>Todo Ofertas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.core.css}" rel="stylesheet" />
+<link th:href="@{/css/alertify.default.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<script th:src="@{/js/jquery-1.12.0.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/alertify.js}" type="text/javascript"></script>
+<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/dataTables.bootstrap.min.js}"
+	type="text/javascript"></script>
+	<script th:src="@{/js/sweetalert.min.js}" type="text/javascript"></script>
+</head>
+<body>
+	<div th:include="/template/ClienteTemplate"></div>
+
+
+	<section id="mainservice">
+		<div class="container">
+
+			<div class="section-header">
+				<h2 class="section-title wow fadeInDown" style="color: #004080;">Mis Cupones</h2>
+				<p class="wow fadeInDown"></p>
+			</div>
+
+			<ul class="nav nav-pills">
+				<li class="active"
+					style="background-color: whitesmoke; color: black;"><a
+					href="#1a" data-toggle="tab">Cupones disponibles</a></li>
+				<li style="background-color: whitesmoke; color: black;"><a
+					href="#2a" data-toggle="tab">Cupones canjeados</a></li>
+				<li style="background-color: whitesmoke; color: black;"><a
+					href="#3a" data-toggle="tab">Cupones vencidos</a></li>
+			</ul>
+
+			<div class="tab-content clearfix"
+				style="background-color: whitesmoke; padding: 2%; color: black;">
+				<div class="tab-pane active" id="1a">
+
+					<table class="table table-bordered" id="tabla">
+						<thead>
+							<tr>
+								<th>Imagen</th>
+								<th>Código del cupón</th>
+								<th>Oferta</th>
+								<th>Descripción</th>
+								<th>Precio</th>
+							</tr>
+						</thead>
+						<tbody th:each="cupon : ${disponibles}">
+							<tr>
+								<td><img class="img-responsive"
+									th:src="@{/images/ofertas.jpg}" style="width: 200px;"></td>
+									<td th:text="${cupon.codigoCupo}"></td>
+								<td th:text="${cupon.ofertas.tituloOferta}"></td>
+								<td th:text="${cupon.ofertas.descripcionOferta}"></td>
+								<td th:text="'$'+${cupon.ofertas.precioOferta}"></td>
+
+								<!--  <a class="btn btn-danger" th:href="'javascript:eliminar(\'' +${rubros.idRubro}+ '\')'"><spanclass="glyphicon glyphicon-trash"></span> Eliminar</a></td>-->
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+				<div class="tab-pane" id="2a">
+					<table class="table table-bordered" id="tabla">
+						<thead>
+							<tr>
+								<th>Imagen</th>
+								<th>Código del cupón</th>
+								<th>Oferta</th>
+								<th>Descripción</th>
+								<th>Precio</th>
+							</tr>
+						</thead>
+						<tbody th:each="cupon : ${canjeados}">
+							<tr>
+								<td><img class="img-responsive"
+									th:src="@{/images/ofertas.jpg}" style="width: 200px;"></td>
+									<td th:text="${cupon.codigoCupo}"></td>
+								<td th:text="${cupon.ofertas.tituloOferta}"></td>
+								<td th:text="${cupon.ofertas.descripcionOferta}"></td>
+								<td th:text="'$'+${cupon.ofertas.precioOferta}"></td>
+
+								<!--  <a class="btn btn-danger" th:href="'javascript:eliminar(\'' +${rubros.idRubro}+ '\')'"><spanclass="glyphicon glyphicon-trash"></span> Eliminar</a></td>-->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="tab-pane" id="3a">
+					<table class="table table-bordered" id="tabla">
+						<thead>
+							<tr>
+								<th>Imagen</th>
+								<th>Código del cupón</th>
+								<th>Oferta</th>
+								<th>Descripción</th>
+								<th>Precio</th>
+							</tr>
+						</thead>
+						<tbody th:each="cupon : ${vencidos}">
+							<tr>
+								<td><img class="img-responsive"
+									th:src="@{/images/ofertas.jpg}" style="width: 200px;"></td>
+								<td th:text="${cupon.codigoCupo}"></td>
+								<td th:text="${cupon.ofertas.tituloOferta}"></td>
+								<td th:text="${cupon.ofertas.descripcionOferta}"></td>
+								<td th:text="'$'+${cupon.ofertas.precioOferta}"></td>
+
+								<!--  <a class="btn btn-danger" th:href="'javascript:eliminar(\'' +${rubros.idRubro}+ '\')'"><spanclass="glyphicon glyphicon-trash"></span> Eliminar</a></td>-->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+
+
+			</div>
+
+		</div>
+	</section>
+
+	<footer id="footer" style="width: 100%; bottom: 0;">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12">&copy; 2018 Todo ofertas.
+					Derechos reservados.</div>
+			</div>
+		</div>
+	</footer>
+
+	<div th:if="${exito}">
+		<div style="display: none;" id="exito" th:text='${exito}'></div>
+		<script>
+		var exito = document.getElementById("exito").innerHTML;
+		swal("Bien!",exito,"success");
+		</script>
+
+	</div>
+
+
+	<div th:if="${fracaso}">
+		<div style="display: none;" id="fracaso" th:text='${fracaso}'></div>
+		<script>
+
+		$('#pills-tab a[href="#pills-profile"]').tab('show')
+		
+		var fracaso = document.getElementById("fracaso").innerHTML;
+		swal("Ups!", fracaso,"error");
+		</script>
+
+	</div>
+
+
+	<!--/#main-slider-->
+	</ body>
+</html>

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import sv.edu.udb.www.ProyectoPOO.entities.Clientes;
 import sv.edu.udb.www.ProyectoPOO.entities.Cupones;
+import sv.edu.udb.www.ProyectoPOO.entities.Usuarios;
 
 
 @Repository("ClientesRepository")
@@ -24,5 +25,8 @@ public interface ClientesRepository extends JpaRepository<Clientes, Integer> {
 	
 	@Query("SELECT c FROM Cupones c INNER JOIN c.clientes cl  where cl.idCliente=?1")
 	public abstract List<Cupones> listarCuponesPorCliente(Integer idCliente);
+	
+	@Query("SELECT c FROM Clientes c INNER JOIN c.usuarios u WHERE u.idUsuario=?1")
+	public abstract Clientes clientePorIdUsuario(Integer idUsuario);
 	
 }

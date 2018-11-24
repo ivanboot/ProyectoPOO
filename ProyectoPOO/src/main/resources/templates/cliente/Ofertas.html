@@ -18,6 +18,7 @@
 <script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
 <script th:src="@{/js/dataTables.bootstrap.min.js}"
 	type="text/javascript"></script>
+<script th:src="@{/js/sweetalert.min.js}" type="text/javascript"></script>	
 </head>
 <body>
 	<div th:include="/template/ClienteTemplate"></div>
@@ -31,48 +32,160 @@
 				<p class="wow fadeInDown"></p>
 			</div>
 
-			<div class="row" th:each="ofertas : ${oActiva}">
-				<div class="col-sm-6 col-md-4">
-					<div class="thumbnail"
-						style="border: 1px solid gray; padding: 5px;">
-						<img class="img-responsive" th:src="@{/images/ofertas.jpg}" alt="">
-						<div class="caption">
-							<h3 style="color: #3EC1D5;" th:text="${ofertas.tituloOferta}"></h3>
-							<p th:text="${ofertas.descripcionOferta}"></p>
+			<div class="row">
+				<div th:each="ofertas : ${oActiva}">
+					<div class="col-sm-6 col-md-4">
+						<div class="thumbnail"
+							style="border: 1px solid gray; padding: 5px;">
+							<img class="img-responsive" th:src="@{/images/ofertas.jpg}"
+								alt="">
+							<div class="caption">
+								<h3 style="color: #3EC1D5;" th:text="${ofertas.tituloOferta}"></h3>
+								<p th:text="${ofertas.descripcionOferta}"></p>
 
-							<p class="price" th:text="'Fecha final: '+${ofertas.fechaFin}"></p>
-							<br />
-							<div class="row">
+								<p class="price" th:text="'Fecha final: '+${ofertas.fechaFin}"></p>
+								<br />
+								<div class="row">
 
 
-								<div class="col-md-6">
+									<div class="col-md-6">
 
-									<button type="button" class="btn btn-primary"
-										style="background-color: #004080;" data-toggle="modal"
-										th:data-target="'#exampleModal'+${ofertas.idOferta}">
-										Ver oferta</button>
-								</div>
+										<button type="button" class="btn btn-primary"
+											style="background-color: #004080;" data-toggle="modal"
+											th:data-target="'#exampleModal'+${ofertas.idOferta}">
+											Ver oferta</button>
+									</div>
 
-								<div class="col-md-6">
-									<p>
-									<h4 style="font-size: 18px;"
-										th:text="'$'+${ofertas.precioOferta} "></h4>
+									<div class="col-md-6">
+										<p>
+										<h4 style="font-size: 18px;"
+											th:text="'$'+${ofertas.precioOferta} "></h4>
 
-									<h4 style="text-decoration: line-through;"
-										th:text="'$'+${ofertas.precioRegular}"></h4>
+										<h4 style="text-decoration: line-through;"
+											th:text="'$'+${ofertas.precioRegular}"></h4>
 
-									</p>
+
+									</div>
+
 								</div>
 
 							</div>
+						</div>
 
+
+						<div class="modal fade" th:id="'exampleModal'+${ofertas.idOferta}"
+							tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<form action="#" th:action="@{/cliente/agregarCupon}"
+										method="post">
+										
+										<input type="hidden" th:name="idOferta" id="idOferta" class="form-control" th:value="${ofertas.idOferta}"/>
+
+										<div class="modal-header">
+											<div class="row">
+
+												<div class="col-md-6">
+													<h3 class="modal-title" id="exampleModalLabel"
+														style="color: black;" th:text="${ofertas.tituloOferta}"></h3>
+												</div>
+
+												<div class="col-md-6">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+											</div>
+											<hr />
+											<div class="modal-body">
+
+												<div class="row">
+
+													<div class="col-md-6" style="color: black;">
+														<img class="img-responsive"
+															th:src="@{/images/ofertas.jpg}">
+
+														<h4>Fecha límite:</h4>
+
+														<p th:text="${ofertas.descripcionOferta} "></p>
+
+														<div class="row">
+
+															<div class="col-md-4">
+																<h4>Cantidad:</h4>
+															</div>
+															<div class="col-md-3">
+																<input type="number" th:name="cantidad" id="cantidad" class="form-control"
+																	style="width: 80px;" />
+															</div>
+														</div>
+
+
+													</div>
+
+													<div class="col-md-6">
+
+														<section class="" style="color: black;">
+															<div>
+
+																<h4>Descripción:</h4>
+
+																<p th:text="${ofertas.descripcionOferta} "></p>
+
+																<h4>Detalles:</h4>
+
+																<p th:text="${ofertas.otrosDetalles} "></p>
+
+																<h4>Cupones disponibles:</h4>
+
+
+
+																<div th:if="${ofertas.cantidadLimite eq null}">
+																	<span >Ilimitados</span>	
+																</div>
+																<span th:text="${ofertas.cantidadLimite} "></span>
+
+
+
+																<h4>Precio:</h4>
+
+																<div class="row">
+
+																	<div class="col-md-3">
+																		<p th:text="'$'+${ofertas.precioOferta}"
+																			style="color: orange; font-size: 20px;"></p>
+																	</div>
+																	<div class="col-md-3">
+																		<p style="text-decoration: line-through;"
+																			th:text="'$'+${ofertas.precioRegular}"></p>
+																	</div>
+																</div>
+														</section>
+													</div>
+
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">Cerrar</button>
+												
+													<input class="btn btn-success" type="submit"
+													value="Comprar" />
+
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	
+
 	<footer id="footer" style="width: 100%; bottom: 0;">
 		<div class="container">
 			<div class="row">
@@ -82,6 +195,28 @@
 		</div>
 	</footer>
 
+	<div th:if="${exito}">
+		<div style="display: none;" id="exito" th:text='${exito}'></div>
+		<script>
+		var exito = document.getElementById("exito").innerHTML;
+		swal("Bien!",exito,"success");
+		</script>
+		
+	</div>
+
+	
+	<div th:if="${fracaso}">
+		<div style="display: none;" id="fracaso" th:text='${fracaso}'></div>
+		<script>
+
+		$('#pills-tab a[href="#pills-profile"]').tab('show')
+		
+		var fracaso = document.getElementById("fracaso").innerHTML;
+		swal("Ups!", fracaso,"error");
+		</script>
+
+	</div>
+	
 
 	<!--/#main-slider-->
 	</ body>

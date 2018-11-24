@@ -25,5 +25,17 @@ public interface CuponesRepository extends JpaRepository<Cupones, String>{
 	
 	@Query("SELECT c FROM Cupones c INNER JOIN c.estadocupon es WHERE es.idEstadoCupon=1 AND c.codigoCupo=?1")
 	public abstract Cupones mostrarEtadoCupon(String codigo);
+	
+	@Query("SELECT c FROM Cupones c INNER JOIN c.estadocupon es INNER JOIN c.clientes d WHERE es.idEstadoCupon=4 AND d.idCliente=?1")
+	public abstract List<Cupones> cuponesEtadoCupon(Integer idCliente);
+	
+	@Query("SELECT c FROM Cupones c INNER JOIN c.estadocupon es INNER JOIN c.clientes d WHERE es.idEstadoCupon=1 AND d.idCliente=?1")
+	public abstract List<Cupones> cuponesDisponibles(Integer idCliente);
+	
+	@Query("SELECT c FROM Cupones c INNER JOIN c.estadocupon es INNER JOIN c.clientes d WHERE es.idEstadoCupon=2 AND d.idCliente=?1")
+	public abstract List<Cupones> cuponesCanjeados(Integer idCliente);
+	
+	@Query("SELECT c FROM Cupones c INNER JOIN c.estadocupon es INNER JOIN c.clientes d WHERE es.idEstadoCupon=3 AND d.idCliente=?1")
+	public abstract List<Cupones> cuponesVencidos(Integer idCliente);
 		
 }
