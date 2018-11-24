@@ -45,19 +45,19 @@ public class EmpleadoController {
 	}
 	
 	
-	@PostMapping("/canjear/obtenerCupon")
-	public String obtenerCupon(@Valid @ModelAttribute("cupones")Cupones cupones, BindingResult result,
+	@PostMapping("/obtenerCupon")
+	public String obtenerCupon(@Valid @ModelAttribute("cupones") Cupones cupones, BindingResult result,
 			Model model) {
 		if(result.hasErrors()) {
 			model.addAttribute("cupones", cupones);
 			return "/empleado/canjearCupon";
 		}else {
 			if(cuponesRepository.existsById(cupones.getCodigoCupo())) {
-				cuponesRepository.listarCuponesConDetalles(cupones.getCodigoCupo());
-				model.addAttribute("cupones", cupones);
+				
+				model.addAttribute("cupones", cuponesRepository.findByCodigoCupo(cupones.getCodigoCupo()));
 				return "/empleado/mostrarCupones";
 			}else {
-				return "empleado/canjear";
+				return "redirect:/empleado/canjear";
 			}
 		}
 	}

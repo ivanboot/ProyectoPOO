@@ -28,7 +28,7 @@ public class CuponesRest {
 		return cuponesRepository.findAllByOrderByCodigoCupo();
 	}
 	//Esto he agregado
-	@GetMapping("/{codigo}")
+	/*@GetMapping("/{codigo}")
 	public ResponseEntity<Optional<Cupones>> obtenerCupones(@PathVariable("codigo") String codigo){
 		try {
 			Optional<Cupones> cupon = (Optional<Cupones>) cuponesRepository.listarCuponesConDetalles(codigo);
@@ -39,7 +39,7 @@ public class CuponesRest {
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-	}
+	}*/
 	
 	
 

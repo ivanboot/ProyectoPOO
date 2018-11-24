@@ -22,14 +22,5 @@ public interface CuponesRepository extends JpaRepository<Cupones, String>{
 	public abstract List<Cupones> listarCuponesPorCliente(Integer idCliente,Integer idEstadoCupon);
 	
 	public abstract Cupones findByCodigoCupo(String codigo);
-	
-	//Esto he agregado
-	@Query("SELECT o.tituloOferta AS Titulo_oferta, c.codigoCupo AS Codigo, c.fechaCompra AS Fecha_compra, o.descripcionOferta AS Descripción, o.otrosDetalles AS Detalles,"
-				+ "cl.nombreClientes AS Nombres_cliente, cl.apellidosClientes AS Apellidos_clientes, es.estado AS Estado FROM Cupones c INNER JOIN Ofertas o "
-				+ "ON c.ofertas.idOferta = o.idOferta "
-			+ "INNER JOIN Clientes cl ON "
-			+ "c.clientes.idCliente = cl.idCliente "
-			+ "INNER JOIN Estadocupon es ON "
-			+ "c.estadocupon.idEstadoCupon = es.idEstadoCupon WHERE c.codigoCupo=?1")
-		public abstract Optional<Cupones> listarCuponesConDetalles(String codigo);
+		
 }
