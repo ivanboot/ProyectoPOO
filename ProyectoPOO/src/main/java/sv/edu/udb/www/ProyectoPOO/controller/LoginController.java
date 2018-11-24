@@ -70,26 +70,7 @@ public class LoginController {
 		} else if (tipoUsuario.equals("Empresa")) {
 			
 			
-			//Obtener usuario logueado y empresa según el usuario logueado
-			
-			Authentication auth = SecurityContextHolder
-		            .getContext()
-		            .getAuthentication();
-		    UserDetails userDetail = (UserDetails) auth.getPrincipal();
-		    
-		    Usuarios usuario = new Usuarios();
-		    
-		    usuario = usuariosRepository.findByCorreo(userDetail.getUsername());
-		    
-		    //En el repositorio de empresas crea un método para obtener la empresa según el id del usuario
-		    
-	    	Empresas empresa = new Empresas();
-	    	
-	    	empresa = empresasRepository.obtenerEmpresaPorUsuario(usuario.getIdUsuario());
-	    	
-	    	System.out.println(empresa.getCodigoEmpresa());
-		    
-		    //fin obtener usuario logueado
+		
 	    	
 			
 			return "/empresa/index";
