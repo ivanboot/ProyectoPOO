@@ -31,8 +31,12 @@ public class Estadocupon  implements java.io.Serializable {
      private Set<Cupones> cuponeses = new HashSet<Cupones>(0);
 
     public Estadocupon() {
+    	
     }
-
+    
+    public  Estadocupon(Integer idEstadoCupon) {
+    	this.idEstadoCupon = idEstadoCupon;
+    }
 	
     public Estadocupon(String estado) {
         this.estado = estado;

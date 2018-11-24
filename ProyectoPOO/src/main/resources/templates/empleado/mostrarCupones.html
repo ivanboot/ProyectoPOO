@@ -56,48 +56,60 @@
 				</div>
 				<input type="submit" class="btn btn-info" value="Mostrar Cupon"
 					name="Mostrar">
-				<div style="background-color: white; padding: 1%; margin-left: 1%; margin-top: 5%;"
+				<div style="background-color: white; padding: 1%; margin-left: 20%; margin-bottom:3%; margin-top: 8%; width: 55%;"
 					class="col-md-4 col-sm-6 ">
 					<div class="thumbnail">
-						<div class="text-center">
+						<div class="text-center" style="margin-left: 35%;">
 							<img alt="img" class="img-responsive"
-								th:src="@{/images/padlock.png}">
+								th:src="@{/images/sales.png}">
 						</div>
 						<div class="text-center">
 							<h3 th:text="${cupones.ofertas.tituloOferta}" />
 						</div>
-						<div class="text-center">
-							<div class="col-md-6">
-								<p>Precio regular:</p>
-								<p th:text="'$'+${ofertas.precioRegular}" />
-							</div>
-							<div class="col-md-6">
-								<p>Precio oferta:</p>
-								<p th:text="'$'+${ofertas.precioOferta}" />
+						<div class="col-md-4">
+							<div class="row">
+								<p>Código:</p>
+								<p th:text="${cupones.codigoCupo}" />
 							</div>
 						</div>
-						<div class="text-center">
-							<div class="col-md-6">
-								<p>Fecha inicial:</p>
-								<p th:text="${ofertas.fechaInicio}" />
-							</div>
-							<div class="col-md-6">
-								<p>Fecha final:</p>
-								<p th:text="${ofertas.fechaFin}" />
-							</div>
-							<div class="col-md-12">
-								<p>Fecha limite:</p>
-								<p th:text="${ofertas.fechaLimite}" />
+						<div class="col-md-4">	
+							<div class="row">
+								<p>Fecha de compra:</p>
+								<p th:text="${cupones.fechaCompra}" />
 							</div>
 						</div>
+						
+						<div class="col-md-4">
+							<div class="row">
+								<p>Descripción:</p>
+								<p th:text="${cupones.ofertas.descripcionOferta}" />
+							</div>
+						</div>
+							
+						<div class="col-md-4">
+							<div class="row">
+								<p>Otros detalles:</p>
+								<p th:text="${cupones.ofertas.otrosDetalles}" />
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="row">
+								<p>Cliente:</p>
+								<p th:text="${cupones.clientes.nombreClientes}" />
+								<p th:text="${cupones.clientes.apellidosClientes}" />
+							</div>
+						</div>
+							
+	
 						<div class="text-center">
-							<p th:text="${ofertas.descripcionOferta}"></p>
+						<p>Estado:</p>
+							<p th:text="${cupones.estadocupon.estado}"></p>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<button type="button" class="btn btn-primary"
 							style="background-color: #004080;" data-toggle="modal"
-							th:data-target="'#exampleModal'+${ofertas.idOferta}">
+							th:data-target="'#exampleModal'+${cupones.codigoCupo}">
 							Canjear</button>
 					</div>
 				</div>
